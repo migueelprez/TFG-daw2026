@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>SENPRO</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--contenido para moviles-->
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+    <nav class="menu-navegacion">
+        <div class="logo">
+            <a asp-controller="home" asp-action="Index">
+                <img src="~/assets/images/logo.jpg" alt="imagen-logo-empresa" class="logo-img" />
+            </a>
+        </div>
+        <div class="menu">
+            <ul class="menu-links">
+                <li><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li class="dropdown">
+                    <a asp-controller="Productos" asp-action="Index" class="dropbtn">
+                        Productos <span class="flecha">▼</span>
+                    </a>
+                    <div class="dropdown-content">
+                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Empapadores">Empapadores</a>
+                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Mobiliario">Mobiliario</a>
+                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Lencería">Lencería</a>
+                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Movilidad">Movilidad</a>
+                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Espinilleras">Protector de
+                            Espinilla</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Antiescaras">Sistemas
+                                Antiescaras</a>
+                                <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Sujeción">Sistemas de
+                                    Sujeción</a>
+                                </div>
+                            </li>
+                            <li><a class="nav-link" asp-controller="Home" asp-action="Contacto">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div class="registro">
+                        <a asp-controller="Account" asp-action="login" class="registro">Registrarse</a>
+                    </div>
+                </nav>
+
+                @RenderBody()
+                <footer class="pie-pagina">
+                    <div class="footer-contenido">
+                        <div class="nombre-footer">
+                            <p class="nombre-empresa">SENPRO</p>
+                        </div>
+                        <div class="contacto" asp-action="Contacto" asp-controller="Home">
+                            <h3>¿Cómo encontrarnos?</h3>
+                            <p>pedidos@senprosan.es</p>
+                            <p>683 347 806</p>
+                            <p>Plaza Nicanor Piñole 1.Esc.Izda, 1Dcha 33205</p>
+                            <p>Gijón, Asturias</p>
+                        </div>
+                    </div>
+                </footer>
+            </body>
+
+        </html>

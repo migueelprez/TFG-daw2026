@@ -1,0 +1,42 @@
+@model TFG.Models.ContactoModel
+<link rel="stylesheet" href="~/css/contacto.css" />
+
+<section class="contacto-section">
+    <div class="contacto-container">
+        <h2>Cuéntanos qué necesitas; estamos aquí para escucharte</h2>
+        
+        @if (ViewBag.MensajeExito != null)
+        {
+            <div class="alerta-exito">@ViewBag.MensajeExito</div>
+        }
+
+        <form asp-action="Contacto" method="post" class="form-senpro">
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" asp-for="Nombre" required />
+            </div>
+
+            <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" asp-for="Email" required />
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono de contacto</label>
+                <input type="tel" asp-for="Telefono" placeholder="Ej: 600 000 000" />
+            </div>
+
+            <div class="form-group">
+                <label>Asunto</label>
+                <input type="text" asp-for="Asunto" required />
+            </div>
+
+            <div class="form-group">
+                <label>Mensaje</label>
+                <textarea asp-for="Mensaje" rows="5"></textarea>
+            </div>
+
+            <button type="submit" class="btn-principal">Enviar mensaje</button>
+        </form>
+    </div>
+</section>

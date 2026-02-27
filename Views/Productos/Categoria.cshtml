@@ -1,0 +1,19 @@
+@model IEnumerable<TFG.Models.ProductoModel>
+<link rel="stylesheet" href="~/css/productos.css" asp-append-version="true" />
+<div class="productos-container">
+    <h1>Categoría: @ViewBag.CategoriaActual</h1>
+    
+    <div class="productos-grid">
+        @foreach (var item in Model)
+        {
+            <div class="producto-card">
+                <img src="~/assets/images/@item.ImagenUrl" alt="@item.Nombre">
+                <div class="info">
+                    <h3>@item.Nombre</h3>
+                    <p>@item.Descripcion</p>
+                    <a href="#" class="btn-secundario">Ver detalles</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

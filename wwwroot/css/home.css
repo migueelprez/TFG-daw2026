@@ -1,0 +1,157 @@
+
+.hero-section, .estrella-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos bajen si no caben */
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 80px 10%;
+    min-height: 70vh;
+}
+
+/* Regla de oro para las columnas */
+.hero-text, .hero-imagen, .estrella-texto, .estrella-imagen {
+    flex: 1 1 350px; /* Base de 350px antes de saltar de línea */
+    min-width: 300px;
+}
+
+/* --- 2. HERO SECTION (Superior) --- */
+.hero-text h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Se hace pequeño en móvil y grande en PC solo */
+    color: #1a1a1a;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.hero-imagen {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Ajusta esta altura según veas el diseño */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo base para ambas imágenes */
+.img-fluida, .img-fluida2 {
+    position: absolute;
+    width: 300px; /* Tamaño de los círculos */
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 8px solid white;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+}
+
+/* Imagen 1: Atrás y arriba a la derecha */
+.img-fluida {
+    z-index: 1;
+    top: 20%;
+    right: 5%;
+    transform: scale(0.9);
+    filter: brightness(0.9); /* Un pelín más oscura para dar profundidad */
+}
+
+/* Imagen 2: Alante y abajo a la izquierda */
+.img-fluida2 {
+    z-index: 2;
+    bottom: 30%;
+    left: 10%;
+}
+
+
+/* --- 3. SECCIÓN ESTRELLA (Azul) --- */
+.seccion-estrella {
+    background-color: #2264d1;
+    color: white;
+    padding: 100px 10%;
+}
+
+.estrella-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: auto; /* No necesita tanto alto como el Hero */
+}
+
+.estrella-texto h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin: 15px 0;
+    line-height: 1.1;
+}
+
+.estrella-imagen img {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* --- 4. BOTONES Y EFECTOS --- */
+.btn-principal, .btn-blanco-outline {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease; /* Importante aquí para que el hover sea suave */
+}
+
+.btn-principal {
+    background-color: #2264d1;
+    color: white;
+    margin-right: 15px;
+}
+
+.btn-principal:hover {
+    background-color: #3b7ded;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(34, 100, 209, 0.3);
+}
+
+.btn-secundario {
+    color: #2264d1;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-secundario:hover {
+    color: #154699;
+    text-decoration: underline;
+}
+
+.btn-blanco-outline {
+    border: 2px solid white;
+    color: white;
+    margin-top: 30px;
+}
+
+.btn-blanco-outline:hover {
+    background-color: white;
+    color: #2264d1;
+}
+
+.tag {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* --- 5. PEQUEÑO AJUSTE MÓVIL --- */
+@media (max-width: 768px) {
+    .hero-section, .seccion-estrella {
+        padding: 40px 5%;
+        text-align: center;
+    }
+    .hero-imagen {
+        order: -1; /* En móvil, la imagen sale primero, luego el texto */
+    }
+}

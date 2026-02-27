@@ -1,0 +1,88 @@
+/* --- SECCIÓN DE CONTACTO SENPRO --- */
+
+.contacto-section {
+    padding: 80px 10%;
+    background-color: #f8faff; /* Un fondo azul gélido muy sutil */
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contacto-container {
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+    max-width: 700px;
+    width: 100%;
+    border: 1px solid rgba(34, 100, 209, 0.05);
+}
+
+.contacto-container h2 {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: -1px;
+}
+
+.contacto-container p {
+    color: #666;
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* --- ESTILO DEL FORMULARIO --- */
+
+.form-senpro {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+    padding-left: 5px;
+}
+
+.form-group input, 
+.form-senpro textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #edf2f7;
+    border-radius: 14px;
+    font-size: 1rem;
+    background-color: #fcfdfe;
+    transition: all 0.3s ease;
+    color: #1a1a1a;
+}
+
+/* Efectos al pinchar en los campos (Focus) */
+.form-group input:focus, 
+.form-senpro textarea:focus {
+    outline: none;
+    border-color: #2264d1;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(34, 100, 209, 0.1);
+}
+
+/* --- MENSAJES DE ESTADO --- */
+
+.alerta-exito {
+    background-color: #e7f9ee;
+    color: #1d7c43;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 30px;
+    border: 1px
+}
