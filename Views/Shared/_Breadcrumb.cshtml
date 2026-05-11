@@ -1,0 +1,23 @@
+@{
+    var crumbs = ViewData["Breadcrumbs"] as List<(string Label, string? Url)>;
+}
+
+@if (crumbs != null && crumbs.Count > 1)
+{
+    <nav class="breadcrumb-global" aria-label="Ruta de navegación">
+        <div class="breadcrumb-global-inner">
+            @for (int i = 0; i < crumbs.Count; i++)
+            {
+                if (i < crumbs.Count - 1)
+                {
+                    <a href="@crumbs[i].Url" class="bc-g-link">@crumbs[i].Label</a>
+                    <span class="bc-g-sep" aria-hidden="true">›</span>
+                }
+                else
+                {
+                    <span class="bc-g-actual" aria-current="page">@crumbs[i].Label</span>
+                }
+            }
+        </div>
+    </nav>
+}

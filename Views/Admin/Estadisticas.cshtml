@@ -1,0 +1,100 @@
+@{
+    ViewData["Title"] = "Estadísticas — Admin";
+    var porCategoria = ViewBag.PorCategoria as IEnumerable<dynamic>;
+}
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="admin-wrapper">
+    <aside class="admin-sidebar">
+        <div class="sidebar-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>Admin Panel</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a asp-controller="Admin" asp-action="Index"        class="sidebar-link">📊 Dashboard</a>
+            <a asp-controller="Admin" asp-action="Productos"    class="sidebar-link">📦 Productos</a>
+            <a asp-controller="Admin" asp-action="Usuarios"     class="sidebar-link">👥 Usuarios</a>
+            <a asp-controller="Admin" asp-action="Pedidos"      class="sidebar-link">🧾 Pedidos</a>
+            <a asp-controller="Admin" asp-action="Presupuestos" class="sidebar-link">💼 Presupuestos</a>
+            <a asp-controller="Admin" asp-action="Estadisticas" class="sidebar-link activo">📈 Estadísticas</a>
+            <hr class="sidebar-divider" />
+            <a asp-controller="Home"  asp-action="Index"        class="sidebar-link">🌐 Ver la web</a>
+            <a asp-controller="Account" asp-action="Logout"     class="sidebar-link sidebar-logout">⬅ Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+        <div class="admin-header">
+            <h1>Estadísticas</h1>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card naranja">
+                <div class="stat-icono">🛒</div>
+                <div class="stat-datos">
+                    <span class="stat-numero">@ViewBag.TotalPedidos</span>
+                    <span class="stat-label">Pedidos totales</span>
+                </div>
+            </div>
+            <div class="stat-card verde">
+                <div class="stat-icono">✅</div>
+                <div class="stat-datos">
+                    <span class="stat-numero">@ViewBag.PedidosPagados</span>
+                    <span class="stat-label">Pedidos pagados</span>
+                </div>
+            </div>
+            <div class="stat-card morado">
+                <div class="stat-icono">💶</div>
+                <div class="stat-datos">
+                    <span class="stat-numero">@(((double)ViewBag.Ingresos).ToString("N2")) €</span>
+                    <span class="stat-label">Ingresos totales</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-seccion">
+            <div class="seccion-header">
+                <h2>Productos por categoría</h2>
+            </div>
+            <div class="tabla-wrapper">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Nº de productos</th>
+                            <th>Distribución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int totalProductos = 0;
+                            var lista = new List<(string Cat, int Total)>();
+                            if (porCategoria != null)
+                            {
+                                foreach (var g in porCategoria)
+                                {
+                                    lista.Add((g.Categoria, (int)g.Total));
+                                    totalProductos += (int)g.Total;
+                                }
+                            }
+                        }
+                        @foreach (var (cat, total) in lista)
+                        {
+                            var pct = totalProductos > 0 ? (double)total / totalProductos * 100 : 0;
+                            <tr>
+                                <td><span class="badge-categoria">@cat</span></td>
+                                <td>@total</td>
+                                <td>
+                                    <div class="barra-progreso">
+                                        <div class="barra-relleno" style="width:@pct.ToString("F0")%"></div>
+                                    </div>
+                                    <small>@pct.ToString("F0")%</small>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>

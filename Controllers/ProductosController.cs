@@ -1,37 +1,44 @@
 using Microsoft.AspNetCore.Mvc;
-using TFG.Models;
-using System.Collections.Generic;
-using System.Linq;
+using TFG.Data;
 
 namespace TFG.Controllers
 {
     public class ProductosController : Controller
     {
-        // Método para ver TODOS los productos (el que llama el botón principal)
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public ProductosController(ApplicationDbContext context)
         {
-            var todos = GetProductos();
-            ViewBag.CategoriaActual = "Todos los productos";
-            return View("Categoria", todos); // Reutilizamos la vista de Categoria
+            _context = context;
         }
 
-        // Método para filtrar por categoría
+        // Ver todos los productos
+        public IActionResult Productos()
+        {
+            var todos = _context.Productos.ToList();
+            ViewBag.CategoriaActual = "Todos los productos";
+            return View("Categoria", todos);
+        }
+
+        // Filtrar por categoría
         public IActionResult Categoria(string id)
         {
-            var filtrados = GetProductos()
-                .Where(p => p.Categoria.Equals(id, System.StringComparison.OrdinalIgnoreCase))
+            var filtrados = _context.Productos
+                .Where(p => p.Categoria.ToLower() == id.ToLower())
                 .ToList();
 
             ViewBag.CategoriaActual = id;
             return View(filtrados);
         }
 
-        private List<ProductoModel> GetProductos()
+        // Página dedicada al producto estrella: Espinillera
+        public IActionResult Espinillera()
         {
-            return new List<ProductoModel> {
-                new ProductoModel { Id = 1, Nombre = "Espinillera Premium", Categoria = "Espinilleras", ImagenUrl = "005DM107012 copia.jpg", Descripcion = "Protección avanzada." },
-                new ProductoModel { Id = 2, Nombre = "Cama Geriátrica", Categoria = "Mobiliario", ImagenUrl = "cama.jpg", Descripcion = "Máximo confort." }
-            };
+            var espinilleras = _context.Productos
+                .Where(p => p.Categoria == "Espinilleras")
+                .ToList();
+
+            return View(espinilleras);
         }
     }
 }

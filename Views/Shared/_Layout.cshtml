@@ -1,63 +1,187 @@
-﻿<!DOCTYPE html>
-<html>
+@using System.Security.Claims
+@{
+    var carritoJson = Context.Session.GetString("carrito");
+    int carritoCount = 0;
+    if (!string.IsNullOrEmpty(carritoJson))
+    {
+        try
+        {
+            var items = System.Text.Json.JsonSerializer.Deserialize<List<TFG.Models.CarritoItem>>(carritoJson);
+            carritoCount = items?.Sum(i => i.Cantidad) ?? 0;
+        }
+        catch { }
+    }
+    bool esAdmin = User.IsInRole("Admin");
+    bool logueado = User.Identity?.IsAuthenticated == true;
+    string userName = User.Identity?.Name ?? "";
+}
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>SENPRO</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "SENPRO")</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--contenido para moviles-->
     @await RenderSectionAsync("Styles", required: false)
 </head>
-
 <body>
+
     <nav class="menu-navegacion">
+
         <div class="logo">
-            <a asp-controller="home" asp-action="Index">
-                <img src="~/assets/images/logo.jpg" alt="imagen-logo-empresa" class="logo-img" />
+            <a asp-controller="Home" asp-action="Index">
+                <img src="~/assets/images/logo.jpg" alt="SENPRO" class="logo-img" />
             </a>
         </div>
+
         <div class="menu">
             <ul class="menu-links">
-                <li><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="Index" class="nav-link">Inicio</a>
+                </li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="QuienesSomos" class="nav-link">Quiénes Somos</a>
+                </li>
+
                 <li class="dropdown">
-                    <a asp-controller="Productos" asp-action="Index" class="dropbtn">
-                        Productos <span class="flecha">▼</span>
+                    <a asp-controller="Productos" asp-action="Productos" class="dropbtn nav-link">
+                        Productos <span class="flecha-nav"></span>
                     </a>
+
                     <div class="dropdown-content">
-                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Empapadores">Empapadores</a>
-                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Mobiliario">Mobiliario</a>
-                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Lencería">Lencería</a>
-                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Movilidad">Movilidad</a>
-                        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Espinilleras">Protector de
-                            Espinilla</a>
-                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Antiescaras">Sistemas
-                                Antiescaras</a>
-                                <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Sujeción">Sistemas de
-                                    Sujeción</a>
-                                </div>
-                            </li>
-                            <li><a class="nav-link" asp-controller="Home" asp-action="Contacto">Contacto</a></li>
-                        </ul>
-                    </div>
-                    <div class="registro">
-                        <a asp-controller="Account" asp-action="login" class="registro">Registrarse</a>
-                    </div>
-                </nav>
 
-                @RenderBody()
-                <footer class="pie-pagina">
-                    <div class="footer-contenido">
-                        <div class="nombre-footer">
-                            <p class="nombre-empresa">SENPRO</p>
+                        @* --- PRODUCTO ESTRELLA --- *@
+                        <div class="dropdown-bloque estrella-bloque">
+                            <span class="dropdown-etiqueta estrella-etiqueta">Producto destacado</span>
+                            <a asp-controller="Productos" asp-action="Espinillera" class="link-estrella">
+                                <span class="estrella-nombre">Protector de Espinilla SENPRO</span>
+                            </a>
                         </div>
-                        <div class="contacto" asp-action="Contacto" asp-controller="Home">
-                            <h3>¿Cómo encontrarnos?</h3>
-                            <p>pedidos@senprosan.es</p>
-                            <p>683 347 806</p>
-                            <p>Plaza Nicanor Piñole 1.Esc.Izda, 1Dcha 33205</p>
-                            <p>Gijón, Asturias</p>
+
+                        <div class="dropdown-separador"></div>
+
+                        @* --- CATEGORÍAS --- *@
+                        <div class="dropdown-bloque">
+                            <span class="dropdown-etiqueta">Categorías</span>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Espinilleras"  class="link-cat">Protectores de Espinilla</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Empapadores"   class="link-cat">Empapadores</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Lencería"      class="link-cat">Lencería Adaptada</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Mobiliario"    class="link-cat">Mobiliario Geriátrico</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Movilidad"     class="link-cat">Movilidad y Ayudas</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Antiescaras"   class="link-cat">Sistemas Antiescaras</a>
+                            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Sujeción"      class="link-cat">Sistemas de Sujeción</a>
+                        </div>
+
+                        <div class="dropdown-separador"></div>
+
+                        <div class="dropdown-bloque pie-dropdown">
+                            <a asp-controller="Productos" asp-action="Productos" class="link-ver-todo">
+                                Ver catálogo completo
+                                <span class="flecha-inline">→</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="Presupuesto" class="nav-link">Presupuesto</a>
+                </li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="Contacto" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-acciones">
+
+            @* Carrito *@
+            <a asp-controller="Carrito" asp-action="Index" class="nav-carrito" title="Mi carrito">
+                <svg class="icono-carrito" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                @if (carritoCount > 0)
+                {
+                    <span class="carrito-badge">@carritoCount</span>
+                }
+            </a>
+
+            @* Usuario *@
+            @if (logueado)
+            {
+                <div class="dropdown user-dropdown">
+                    <button class="user-btn dropbtn">
+                        <span class="user-avatar">@userName[0].ToString().ToUpper()</span>
+                        <span class="user-name">@userName</span>
+                        <span class="flecha-nav user-flecha"></span>
+                    </button>
+                    <div class="dropdown-content dropdown-user">
+                        @if (esAdmin)
+                        {
+                            <div class="dropdown-bloque">
+                                <span class="dropdown-etiqueta">Administración</span>
+                                <a asp-controller="Admin" asp-action="Index" class="link-cat">Panel de administración</a>
+                            </div>
+                            <div class="dropdown-separador"></div>
+                        }
+                        <div class="dropdown-bloque">
+                            <a asp-controller="Account" asp-action="MisPedidos" class="link-cat">Mis pedidos</a>
+                            <a asp-controller="Carrito" asp-action="Index" class="link-cat">Mi carrito</a>
+                            <a asp-controller="Account" asp-action="Logout" class="link-cat link-logout">Cerrar sesión</a>
                         </div>
                     </div>
-                </footer>
-            </body>
+                </div>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login"    class="btn-login">Iniciar sesión</a>
+                <a asp-controller="Account" asp-action="Register" class="btn-registro">Registrarse</a>
+            }
+        </div>
 
-        </html>
+    </nav>
+
+    @await Html.PartialAsync("_Breadcrumb")
+
+    @RenderBody()
+
+    <footer class="pie-pagina">
+        <div class="footer-contenido">
+            <div class="footer-marca">
+                <p class="nombre-empresa">SENPRO</p>
+                <p class="footer-lema">Suministros de confianza para centros geriátricos</p>
+            </div>
+            <div class="footer-links">
+                <h4>Productos</h4>
+                <a asp-controller="Productos" asp-action="Espinillera">Protector de Espinilla</a>
+                <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Movilidad">Movilidad</a>
+                <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Antiescaras">Antiescaras</a>
+                <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Sujeción">Sujeción</a>
+            </div>
+            <div class="footer-links">
+                <h4>Empresa</h4>
+                <a asp-controller="Home" asp-action="QuienesSomos">Quiénes Somos</a>
+                <a asp-controller="Home" asp-action="Presupuesto">Solicitar Presupuesto</a>
+                <a asp-controller="Home" asp-action="Contacto">Contacto</a>
+            </div>
+            <div class="footer-contacto">
+                <h4>Contacto</h4>
+                <p>pedidos@senprosan.es</p>
+                <p>683 347 806</p>
+                <p>Plaza Nicanor Piñole 1, Esc.Izda, 1Dcha</p>
+                <p>33205 Gijón, Asturias</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; @DateTime.Now.Year SENPRO &middot; Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

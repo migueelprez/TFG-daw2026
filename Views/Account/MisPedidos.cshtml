@@ -1,0 +1,82 @@
+@model IEnumerable<TFG.Models.Pedido>
+@{
+    ViewData["Title"] = "Mis Pedidos — SENPRO";
+    Layout = "_Layout";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Mis pedidos", null)
+    };
+}
+<link rel="stylesheet" href="~/css/mis-pedidos.css" asp-append-version="true" />
+
+<div class="pedidos-wrapper">
+
+    <div class="pedidos-header">
+        <div class="pedidos-header-inner">
+            <h1>Mis pedidos</h1>
+            <p class="pedidos-sub">Historial completo de tus compras en SENPRO.</p>
+        </div>
+    </div>
+
+    <div class="pedidos-contenido">
+
+        @if (!Model.Any())
+        {
+            <div class="pedidos-vacio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <h2>Aún no tienes pedidos</h2>
+                <p>Cuando realices tu primera compra, aparecerá aquí.</p>
+                <a asp-controller="Productos" asp-action="Productos" class="btn-principal">Ver catálogo</a>
+            </div>
+        }
+        else
+        {
+            <div class="pedidos-lista">
+                @foreach (var pedido in Model)
+                {
+                    <div class="pedido-card">
+                        <div class="pedido-header">
+                            <div class="pedido-meta">
+                                <span class="pedido-id">#@pedido.Id</span>
+                                <span class="pedido-fecha">@pedido.FechaPedido.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+                            <div class="pedido-acciones">
+                                <span class="estado-badge estado-@pedido.Estado.ToLower()">@pedido.Estado</span>
+                                <span class="pedido-total">@pedido.Total.ToString("N2") €</span>
+                            </div>
+                        </div>
+
+                        @if (pedido.Lineas != null && pedido.Lineas.Any())
+                        {
+                            <div class="pedido-lineas">
+                                @foreach (var linea in pedido.Lineas)
+                                {
+                                    <div class="pedido-linea">
+                                        <span class="linea-nombre">@linea.NombreProducto</span>
+                                        <span class="linea-detalle">
+                                            @linea.Cantidad × @linea.PrecioUnitario.ToString("N2") €
+                                        </span>
+                                        <span class="linea-subtotal">
+                                            @((linea.Cantidad * linea.PrecioUnitario).ToString("N2")) €
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(pedido.StripeSessionId))
+                        {
+                            <div class="pedido-footer-info">
+                                <small class="pedido-stripe">Ref. Stripe: @pedido.StripeSessionId.Substring(0, Math.Min(20, pedido.StripeSessionId.Length))…</small>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

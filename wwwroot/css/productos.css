@@ -1,31 +1,457 @@
-.productos-container {
-    padding: 60px 10%;
-    background-color: #fcfdfe;
+/* ==============================================
+   PÁGINA DE PRODUCTOS — productos.css
+   Coherente con site.css y home.css (SENPRO)
+   ============================================== */
+
+
+/* --- 1. CABECERA DE CATEGORÍA --- */
+
+.categoria-header {
+    background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%);
+    padding: 50px 10% 40px;
+    border-bottom: 1px solid #dce8fb;
 }
+
+.categoria-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categoria-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: #1a1a1a;
+    margin: 14px 0 8px;
+    line-height: 1.15;
+}
+
+.cat-subtitulo {
+    color: #667;
+    font-size: 1rem;
+    margin: 0;
+}
+
+
+/* --- 2. BREADCRUMB --- */
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: #888;
+    flex-wrap: wrap;
+}
+
+.breadcrumb a {
+    color: #2264d1;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #154699;
+    text-decoration: underline;
+}
+
+.bc-sep {
+    color: #bbb;
+    font-size: 1rem;
+}
+
+.bc-actual {
+    color: #444;
+    font-weight: 600;
+}
+
+
+/* --- 3. BARRA DE FILTRO DE CATEGORÍAS --- */
+
+.filtro-bar {
+    background: #fff;
+    border-bottom: 1px solid #eaeaea;
+    position: sticky;
+    top: 74px; /* Justo debajo del nav principal */
+    z-index: 900;
+    padding: 0 10%;
+}
+
+.filtro-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 14px 0;
+    scrollbar-width: none; /* Firefox: oculta scrollbar pero permite scroll */
+}
+
+.filtro-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.filtro-btn {
+    display: inline-block;
+    padding: 7px 18px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #444;
+    background: #f2f4f7;
+    white-space: nowrap;
+    border: 1.5px solid transparent;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.filtro-btn:hover {
+    background: #e8f0fe;
+    color: #2264d1;
+    border-color: #c5d8fb;
+}
+
+.filtro-btn.activo {
+    background: #2264d1;
+    color: #fff;
+    border-color: #2264d1;
+}
+
+
+/* --- 4. CONTENEDOR PRINCIPAL --- */
+
+.productos-container {
+    padding: 50px 10% 60px;
+    background-color: #fcfdfe;
+    min-height: 40vh;
+}
+
+
+/* --- 5. GRID DE TARJETAS --- */
 
 .productos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+
+/* --- 6. TARJETA DE PRODUCTO --- */
+
 .producto-card {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .producto-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(34, 100, 209, 0.13);
 }
 
-.producto-card img {
+/* Zona de imagen */
+.card-imagen {
+    position: relative;
+    background: #f8f9fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 20px 16px;
+    min-height: 210px;
+}
+
+.card-imagen img {
     max-width: 100%;
-    height: 200px;
+    height: 180px;
     object-fit: contain;
-    margin-bottom: 15px;
+    transition: transform 0.35s ease;
+}
+
+.producto-card:hover .card-imagen img {
+    transform: scale(1.05);
+}
+
+/* Badge de categoría */
+.card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(34, 100, 209, 0.1);
+    color: #2264d1;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 50px;
+}
+
+/* Zona de información */
+.card-info {
+    padding: 20px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Empuja el botón al fondo */
+    gap: 10px;
+}
+
+.card-info h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.card-info p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+}
+
+/* Botón dentro de la tarjeta */
+.btn-detalle {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 9px 20px;
+    border-radius: 30px;
+    background-color: #2264d1;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+    align-self: flex-start;
+}
+
+.btn-detalle:hover {
+    background-color: #3b7ded;
+    transform: translateY(-2px);
+}
+
+
+/* --- 7. ESTADO VACÍO --- */
+
+.sin-productos {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 1.05rem;
+}
+
+.sin-productos .btn-principal {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 30px;
+    background-color: #2264d1;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.sin-productos .btn-principal:hover {
+    background-color: #3b7ded;
+}
+
+
+/* --- 8. SECCIÓN CTA INFERIOR --- */
+
+.cta-productos {
+    background-color: #2264d1;
+    color: #fff;
+    padding: 70px 10%;
+    text-align: center;
+}
+
+.cta-inner {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.cta-productos h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.cta-productos p {
+    font-size: 1.05rem;
+    opacity: 0.88;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+/* btn-blanco-outline ya está definido en home.css (cargado globalmente) */
+
+
+/* --- 9. RESPONSIVE --- */
+
+@media (max-width: 992px) {
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .categoria-header {
+        padding: 36px 5% 28px;
+        text-align: center;
+    }
+
+    .breadcrumb {
+        justify-content: center;
+    }
+
+    .filtro-bar {
+        padding: 0 5%;
+        top: 0; /* En móvil el nav no es sticky de la misma forma */
+    }
+
+    .productos-container {
+        padding: 36px 5% 50px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .cta-productos {
+        padding: 50px 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* --- 10. BUSCADOR --- */
+
+.buscador-bar {
+    background: #fff;
+    border-bottom: 1px solid #eef1f6;
+    padding: 14px 10%;
+}
+
+.buscador-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.buscador-input-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 480px;
+    display: flex;
+    align-items: center;
+}
+
+.buscador-icono {
+    position: absolute;
+    left: 14px;
+    width: 17px;
+    height: 17px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.buscador-input-wrap input {
+    width: 100%;
+    padding: 10px 40px 10px 42px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: #0f172a;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.buscador-input-wrap input:focus {
+    border-color: #2264d1;
+    box-shadow: 0 0 0 3px rgba(34,100,209,0.1);
+    background: #fff;
+}
+
+.btn-limpiar-busqueda {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 4px;
+    border-radius: 50%;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1;
+}
+
+.btn-limpiar-busqueda:hover {
+    color: #374151;
+    background: #f1f5f9;
+}
+
+.resultados-texto {
+    font-size: 0.83rem;
+    color: #64748b;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* --- 11. BADGES STOCK --- */
+
+.card-badge-agotado {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc2626;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.card-badge-pocas {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ea580c;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.04em;
+}
+
+.btn-agotado {
+    background: #e2e8f0 !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
+
+.btn-agotado:hover {
+    transform: none !important;
 }

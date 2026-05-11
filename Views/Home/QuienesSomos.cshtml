@@ -1,0 +1,189 @@
+@{
+    ViewData["Title"] = "Quiénes Somos — SENPRO";
+    Layout = "_Layout";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Quiénes Somos", null)
+    };
+}
+<link rel="stylesheet" href="~/css/quienes-somos.css" asp-append-version="true" />
+
+@* ── HERO ── *@
+<section class="qs-hero">
+    <div class="qs-hero-inner">
+        <span class="qs-pretitulo">Nuestra historia</span>
+        <h1>Cuidar es nuestra vocación,<br />la excelencia nuestra norma</h1>
+        <p class="qs-hero-desc">
+            En SENPRO llevamos años acompañando a residencias, hospitales y centros de día
+            con los mejores suministros geriátricos del mercado.
+        </p>
+        <div class="qs-hero-badges">
+            <span class="qs-badge">+200 centros atendidos</span>
+            <span class="qs-badge">+500 referencias</span>
+            <span class="qs-badge">Envío 24&nbsp;h</span>
+        </div>
+    </div>
+    <div class="qs-hero-visual">
+        <div class="qs-hero-anillo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+        </div>
+    </div>
+</section>
+
+@* ── QUIÉNES SOMOS ── *@
+<section class="qs-seccion qs-intro">
+    <div class="qs-seccion-inner">
+        <div class="qs-texto">
+            <span class="qs-label">Quiénes somos</span>
+            <h2>Experiencia al servicio de quienes más lo necesitan</h2>
+            <p>
+                Somos una empresa joven pero contamos con personal con una dilatada experiencia
+                en el mundo de la ayuda, atención y servicio tanto a nuestros mayores como a
+                cualquier persona con algún tipo de discapacidad.
+            </p>
+            <p>
+                En SENPRO, disponemos de la mayor selección de artículos para residencias,
+                hospitales o centros de día. En nuestro catálogo encontrará una gran variedad de
+                mantas, colchas, vestuario, EPIs, camas, barreras, grúas y todo lo necesario para
+                hacer el día a día más fácil a nuestros seres queridos, cuidadores y familiares.
+            </p>
+        </div>
+        <div class="qs-imagen">
+            <div class="qs-img-card">
+                <div class="qs-img-deco"></div>
+                <img src="~/assets/images/logo.jpg" alt="Equipo SENPRO" />
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ── CIFRAS ── *@
+<section class="qs-cifras">
+    <div class="qs-cifras-inner">
+        <div class="qs-cifra">
+            <span class="cifra-num">+15</span>
+            <span class="cifra-desc">Años de experiencia en el sector</span>
+        </div>
+        <div class="qs-cifra">
+            <span class="cifra-num">+200</span>
+            <span class="cifra-desc">Centros geriátricos atendidos</span>
+        </div>
+        <div class="qs-cifra">
+            <span class="cifra-num">+500</span>
+            <span class="cifra-desc">Referencias en catálogo</span>
+        </div>
+        <div class="qs-cifra">
+            <span class="cifra-num">24&nbsp;h</span>
+            <span class="cifra-desc">Tiempo de entrega estándar</span>
+        </div>
+    </div>
+</section>
+
+@* ── MISIÓN / VISIÓN / VALORES ── *@
+<section class="qs-seccion qs-valores">
+    <div class="qs-seccion-inner centrado">
+        <span class="qs-label">Lo que nos mueve</span>
+        <h2>Misión, visión y valores</h2>
+        <div class="qs-valores-grid">
+            <div class="qs-valor-card">
+                <div class="qs-valor-icono azul">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <h3>Misión</h3>
+                <p>
+                    Proporcionar a residencias y centros geriátricos los mejores productos de
+                    protección y cuidado, con la máxima calidad y un servicio cercano y profesional
+                    que facilite la labor de los cuidadores.
+                </p>
+            </div>
+            <div class="qs-valor-card">
+                <div class="qs-valor-icono verde">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                </div>
+                <h3>Visión</h3>
+                <p>
+                    Convertirnos en el proveedor de referencia para el sector geriátrico en España,
+                    ampliando continuamente nuestro catálogo con soluciones innovadoras que mejoren
+                    la calidad de vida de residentes y cuidadores.
+                </p>
+            </div>
+            <div class="qs-valor-card">
+                <div class="qs-valor-icono naranja">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <h3>Valores</h3>
+                <p>
+                    Calidad, honestidad y compromiso definen cada uno de nuestros actos. Solo
+                    trabajamos con materiales de primera calidad cuyos productos superan las pruebas
+                    más exigentes en seguridad.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ── COMPROMISO ── *@
+<section class="qs-compromiso">
+    <div class="qs-compromiso-inner">
+        <div class="qs-compromiso-texto">
+            <span class="qs-label claro">Nuestro compromiso</span>
+            <h2>Más allá de la venta</h2>
+            <p>
+                Nuestro servicio va más allá de la venta. Contamos con el mejor equipo de
+                profesionales para resolver cualquier duda sobre las necesidades del paciente
+                que pueda ofrecer el mercado.
+            </p>
+            <p>
+                El cuidado de las personas de la tercera edad y de las personas con algún tipo
+                de discapacidad es un trabajo delicado que requiere de toda la profesionalidad
+                pero, también y sobre todo, de la máxima dedicación y atención. Por eso, en
+                SENPRO, solo trabajamos con materiales de primera calidad.
+            </p>
+            <div class="qs-compromisos-lista">
+                <div class="qs-punto">
+                    <span class="qs-check">✓</span>
+                    <span>Productos certificados con los más altos estándares de calidad</span>
+                </div>
+                <div class="qs-punto">
+                    <span class="qs-check">✓</span>
+                    <span>Asesoramiento personalizado para cada residencia</span>
+                </div>
+                <div class="qs-punto">
+                    <span class="qs-check">✓</span>
+                    <span>Entregas rápidas y gestión ágil de pedidos</span>
+                </div>
+                <div class="qs-punto">
+                    <span class="qs-check">✓</span>
+                    <span>Atención postventa y soporte continuo</span>
+                </div>
+            </div>
+        </div>
+        <div class="qs-compromiso-dato">
+            <div class="dato-destacado">
+                <span class="dato-grande">100%</span>
+                <span class="dato-desc">de nuestros productos pasan controles de calidad antes de llegar a tu residencia</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ── CTA ── *@
+<section class="qs-cta">
+    <div class="qs-cta-inner">
+        <h2>¿Quieres conocer nuestro catálogo?</h2>
+        <p>Descubre toda la gama de productos SENPRO diseñados para el cuidado geriátrico profesional.</p>
+        <div class="qs-cta-botones">
+            <a asp-controller="Productos" asp-action="Productos" class="btn-principal">Ver catálogo completo</a>
+            <a asp-controller="Home" asp-action="Presupuesto" class="btn-secundario">Solicitar presupuesto</a>
+        </div>
+    </div>
+</section>

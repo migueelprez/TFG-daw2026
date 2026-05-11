@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Acceso denegado";
+}
+<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+<div class="auth-wrapper">
+    <div class="auth-card" style="text-align:center">
+        <div style="font-size:3rem;margin-bottom:16px">🔒</div>
+        <h1 class="auth-title">Acceso denegado</h1>
+        <p class="auth-sub">No tienes permisos para acceder a esta sección.</p>
+        <a asp-controller="Home" asp-action="Index" class="btn-auth" style="display:inline-block;margin-top:8px">
+            Volver al inicio
+        </a>
+    </div>
+</div>

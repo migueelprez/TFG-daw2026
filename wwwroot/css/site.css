@@ -1,3 +1,6 @@
+/* ==============================================
+   ESTILOS GLOBALES — site.css  (SENPRO)
+   ============================================== */
 
 * {
     border: none;
@@ -7,208 +10,558 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
+img { max-width: 100%; height: auto; display: block; }
 
-main {
-    min-height: 80vh; /* Ajustado para que el footer no flote en páginas con poco contenido */
-    padding: 20px 0;
-}
 
-/* --- 2. MENÚ DE NAVEGACIÓN (HEADER) --- */
+/* ════════════════════════════════════════════════
+   NAVEGACIÓN
+   ════════════════════════════════════════════════ */
+
 .menu-navegacion {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem 10%;
-    background-color: #ffffff;
+    padding: 0 8%;
+    height: 68px;
+    background: #ffffff;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sombra para separar del contenido */
+    border-bottom: 1px solid #eef1f6;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
 }
 
 .logo-img {
-    height: 50px;
-    width: 50px;
+    height: 42px;
+    width: 42px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #2264d1;
+    transition: transform 0.2s;
 }
+.logo-img:hover { transform: scale(1.06); }
 
+/* Links */
 .menu-links {
     display: flex;
     list-style: none;
-    gap: 50px; /* Espaciado entre links en escritorio */
+    gap: 4px;
     align-items: center;
 }
 
-.menu-links li a {
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     text-decoration: none;
-    color: #1a1a1a;
+    color: #374151;
     font-weight: 500;
-    transition: color 0.3s;
-    padding: 5px 0;
+    font-size: 0.92rem;
+    padding: 7px 13px;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s;
+    letter-spacing: 0.01em;
+}
+.nav-link:hover { background: #f0f5ff; color: #2264d1; }
+
+
+
+/* ════════════════════════════════════════════════
+   DROPDOWN — HOVER FIX + DISEÑO
+   ════════════════════════════════════════════════ */
+
+.dropdown { position: relative; }
+
+/*
+ * FIX HOVER: el pseudo-elemento crea un puente invisible
+ * entre el trigger y el panel, para que el ratón no
+ * "salga" del .dropdown al desplazarse hacia abajo.
+ */
+.dropdown::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: -12px;
+    right: -12px;
+    height: 14px;        /* debe coincidir con el gap visual del panel */
+    z-index: 1001;
 }
 
-.menu-links li a:hover {
-    color: #2264d1;
+.dropbtn {
+    cursor: pointer;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #374151;
+    padding: 7px 13px;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s;
+    letter-spacing: 0.01em;
 }
+.dropbtn:hover { background: #f0f5ff; color: #2264d1; }
 
-/* --- 3. DESPLEGABLE (DROPDOWN) --- */
-.dropdown {
-    position: relative;
+/* Flechita CSS — sin emoji */
+.flecha-nav {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-right: 1.8px solid currentColor;
+    border-bottom: 1.8px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.2s;
+    opacity: 0.55;
+    flex-shrink: 0;
 }
+.dropdown:hover .flecha-nav,
+.user-dropdown:hover .flecha-nav { transform: rotate(225deg) translateY(-2px); }
 
+/* Panel desplegable */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #ffffff;
-    min-width: 200px;
-    z-index: 1001;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    margin-top: 0;
-    padding: 10px 0;
+    top: calc(100% + 14px);   /* 14px = mismo que la altura del puente ::before */
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    background: #fff;
+    border: 1px solid #e8ecf2;
+    border-radius: 14px;
+    box-shadow: 0 16px 48px rgba(15,23,42,0.12);
+    z-index: 1002;
+    overflow: hidden;
+    animation: panelEntra 0.16s ease;
 }
 
-.dropdown-content a {
-    color: #1a1c1e;
-    padding: 12px 20px;
+@keyframes panelEntra {
+    from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.dropdown:hover .dropdown-content { display: block; }
+
+/* Bloques internos */
+.dropdown-bloque { padding: 10px 8px; }
+
+/* Etiqueta de sección */
+.dropdown-etiqueta {
+    display: block;
+    padding: 2px 10px 8px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+/* ── Bloque Producto Estrella ── */
+.estrella-bloque { background: #fafbff; }
+
+.estrella-etiqueta { color: #2264d1 !important; }
+
+.link-estrella {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px;
+    border-radius: 8px;
     text-decoration: none;
-    display: block;
-    font-size: 14px;
-    transition: background 0.2s;
-   
+    background: linear-gradient(135deg, #2264d1 0%, #3b7ded 100%);
+    margin: 0 2px;
+    transition: opacity 0.2s, transform 0.15s;
+}
+.link-estrella:hover { opacity: 0.92; transform: translateY(-1px); }
+
+.estrella-nombre {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+}
+.estrella-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.72);
+    font-weight: 400;
 }
 
-.dropdown-content a:hover {
-    background-color: #f8f9fa;
+/* ── Links de categoría ── */
+.link-cat {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    color: #374151;
+    font-size: 0.88rem;
+    font-weight: 500;
+    position: relative;
+    transition: background 0.15s, color 0.15s, padding-left 0.15s;
+}
+.link-cat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 0;
+    background: #2264d1;
+    border-radius: 2px;
+    transition: width 0.15s;
+}
+.link-cat:hover {
+    background: #f0f5ff;
     color: #2264d1;
+    padding-left: 18px;
+}
+.link-cat:hover::before { width: 3px; }
+
+.link-logout { color: #dc2626; }
+.link-logout:hover { background: #fff5f5 !important; color: #991b1b !important; }
+.link-logout:hover::before { background: #dc2626 !important; }
+
+/* Separador */
+.dropdown-separador {
+    height: 1px;
+    background: #eef1f6;
+    margin: 0 8px;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
+/* Pie del dropdown */
+.pie-dropdown { padding: 8px 8px 10px; }
+
+.link-ver-todo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #2264d1;
+    transition: background 0.15s;
+}
+.link-ver-todo:hover { background: #f0f5ff; }
+
+.flecha-inline { font-style: normal; }
+
+
+/* ════════════════════════════════════════════════
+   DROPDOWN USUARIO
+   ════════════════════════════════════════════════ */
+
+.user-dropdown { margin-left: 6px; }
+
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px 5px 5px;
+    border-radius: 50px;
+    cursor: pointer;
+    background: #f0f5ff;
+    transition: background 0.18s;
+    font-size: 0.88rem;
+    color: #1e3a6e;
+    font-weight: 600;
+}
+.user-btn:hover { background: #dce8fb; }
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2264d1;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    flex-shrink: 0;
 }
 
-.flecha {
-    font-size: 10px;
-    margin-left: 5px;
-    vertical-align: middle;
+.user-name {
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* --- 4. BOTÓN DE REGISTRO --- */
-.registro {
-    background-color: #2264d1;
-    padding: 0.8rem 1.8rem;
+.user-flecha { margin-left: 2px; }
+
+.dropdown-user {
+    right: 0;
+    left: auto;
+    transform: none;
+    min-width: 210px;
+    animation-name: panelEntradDer;
+}
+
+@keyframes panelEntradDer {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.user-dropdown:hover .dropdown-content { display: block; }
+/* override transform para el panel de usuario */
+.user-dropdown .dropdown-content { transform: none !important; }
+/*
+ * FIX HOVER usuario: el panel se abre hacia la derecha y el trigger
+ * puede ser más estrecho que el panel. Extendemos el bridge para
+ * cubrir todo el ancho del panel (210px aprox.) hacia la izquierda.
+ */
+.user-dropdown::before {
+    left: auto;
+    right: 0;
+    width: 250px;   /* más ancho que el panel para no perder hover */
+}
+
+
+/* ════════════════════════════════════════════════
+   ACCIONES NAV
+   ════════════════════════════════════════════════ */
+
+.nav-acciones {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Icono carrito SVG */
+.nav-carrito {
+    position: relative;
+    text-decoration: none;
+    color: #374151;
+    padding: 8px 10px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    transition: background 0.18s, color 0.18s;
+}
+.nav-carrito:hover { background: #f0f5ff; color: #2264d1; }
+
+.icono-carrito { width: 20px; height: 20px; }
+
+.carrito-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #dc2626;
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    min-width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+/* Botones nav */
+.btn-login {
+    padding: 7px 16px;
     border-radius: 50px;
     text-decoration: none;
-    color: white !important; /* Forzamos el blanco */
-    font-weight: bold;
-    transition: background 0.3s, transform 0.2s;
+    color: #2264d1;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border: 1.5px solid #c7d9f8;
+    transition: all 0.2s;
 }
+.btn-login:hover { background: #f0f5ff; border-color: #2264d1; }
 
-.registro:hover {
-    background-color: #1a4da3;
-    transform: translateY(-2px);
+.btn-registro {
+    padding: 7px 18px;
+    border-radius: 50px;
+    text-decoration: none;
+    background: #2264d1;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.88rem;
+    transition: background 0.2s, transform 0.15s;
 }
+.btn-registro:hover { background: #1a4da3; transform: translateY(-1px); }
 
-/* --- 5. PIE DE PÁGINA (FOOTER) --- */
+
+/* ════════════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════════════ */
+
 .pie-pagina {
-    background-color: #1a1a1a;
-    padding: 3rem 10%;
-    border-top: 1px solid #333;
-    color: white;
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 56px 8% 0;
 }
 
 .footer-contenido {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #1e293b;
 }
 
-.nombre-empresa {
-    font-size: 1.8rem;
-    font-weight: bold;
+.footer-marca .nombre-empresa {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -0.5px;
+}
+.footer-lema {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin-top: 8px;
+    max-width: 220px;
+    line-height: 1.55;
 }
 
-.contacto {
-    text-align: right;
-    line-height: 1.6;
+.footer-links h4,
+.footer-contacto h4 {
+    color: #e2e8f0;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+.footer-links { display: flex; flex-direction: column; gap: 9px; }
+.footer-links a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+}
+.footer-links a:hover { color: #93c5fd; }
+
+.footer-contacto { display: flex; flex-direction: column; gap: 7px; }
+.footer-contacto p { font-size: 0.88rem; line-height: 1.5; }
+
+.footer-bottom {
+    padding: 18px 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #475569;
 }
 
-.contacto h3 {
-    margin-bottom: 10px;
-    color: white;
+
+/* ════════════════════════════════════════════════
+   BOTONES COMPARTIDOS
+   ════════════════════════════════════════════════ */
+
+.btn-principal {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    background: #2264d1;
+    color: #fff;
+    transition: all 0.25s ease;
+}
+.btn-principal:hover {
+    background: #3b7ded;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(34,100,209,0.28);
 }
 
-.contacto p {
-    color: #ccc;
-    font-size: 0.95rem;
+.btn-secundario {
+    color: #2264d1;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
 }
+.btn-secundario:hover { color: #154699; text-decoration: underline; }
 
-/* --- 6. MEDIA QUERIES (RESPONSIVE) --- */
+.btn-blanco-outline {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    border: 2px solid rgba(255,255,255,0.7);
+    color: #fff;
+    transition: all 0.25s ease;
+}
+.btn-blanco-outline:hover { background: #fff; color: #2264d1; border-color: #fff; }
+
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════ */
 
 @media (max-width: 992px) {
-    .menu-links {
-        gap: 30px; /* Reducimos espacio en tablets */
-    }
+    .menu-navegacion { padding: 0 5%; }
+    .user-name { display: none; }
 }
 
 @media (max-width: 768px) {
-    /* Ajustes Nav Móvil */
     .menu-navegacion {
-        flex-direction: column;
-        gap: 20px;
-        padding: 1.5rem 5%;
-        text-align: center;
-    }
-
-    .menu-links {
-        flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
+        height: auto;
+        padding: 12px 5%;
+        gap: 10px;
     }
+    .menu-links { flex-wrap: wrap; gap: 2px; justify-content: center; }
 
     .dropdown-content {
-        position: static; /* En móvil el desplegable no flota, empuja hacia abajo */
-        box-shadow: none;
-        border: 1px solid #eee;
-        width: 100%;
+        position: static;
+        transform: none !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        border-radius: 10px;
+        margin-top: 6px;
+        animation: none;
     }
+    .dropdown::before { display: none; }
 
-    /* Ajustes Footer Móvil */
-    .footer-contenido {
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-    }
-
-    .contacto {
-        text-align: center;
-    }
-    /* Asegura que el área sea clicable */
-.dropdown {
-    position: relative;
-    display: inline-block;
+    .footer-contenido { flex-direction: column; gap: 28px; }
+    .footer-links { align-items: flex-start; }
+    .footer-lema { max-width: 100%; }
 }
 
-/* Forzamos que el menú se abra al pasar el ratón para liberar el CLIC */
-.dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+
+/* ════════════════════════════════════════════════
+   BREADCRUMB GLOBAL
+   ════════════════════════════════════════════════ */
+
+.breadcrumb-global {
+    background: #f8fafc;
+    border-bottom: 1px solid #eef1f6;
+    padding: 10px 8%;
 }
 
-/* Evita que el botón 'Productos' ignore el enlace */
-.dropbtn {
-    pointer-events: auto !important;
-    cursor: pointer;
+.breadcrumb-global-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
 }
+
+.bc-g-link {
+    font-size: 0.8rem;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.bc-g-link:hover { color: #2264d1; text-decoration: underline; }
+
+.bc-g-sep {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    user-select: none;
+}
+
+.bc-g-actual {
+    font-size: 0.8rem;
+    color: #0f172a;
+    font-weight: 600;
 }

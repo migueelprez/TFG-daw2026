@@ -1,0 +1,91 @@
+@model IEnumerable<TFG.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Gestión de Usuarios — Admin";
+}
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="admin-wrapper">
+    <aside class="admin-sidebar">
+        <div class="sidebar-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>Admin Panel</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a asp-controller="Admin" asp-action="Index"        class="sidebar-link">📊 Dashboard</a>
+            <a asp-controller="Admin" asp-action="Productos"    class="sidebar-link">📦 Productos</a>
+            <a asp-controller="Admin" asp-action="Usuarios"     class="sidebar-link activo">👥 Usuarios</a>
+            <a asp-controller="Admin" asp-action="Pedidos"      class="sidebar-link">🧾 Pedidos</a>
+            <a asp-controller="Admin" asp-action="Presupuestos" class="sidebar-link">💼 Presupuestos</a>
+            <a asp-controller="Admin" asp-action="Estadisticas" class="sidebar-link">📈 Estadísticas</a>
+            <hr class="sidebar-divider" />
+            <a asp-controller="Home"  asp-action="Index"        class="sidebar-link">🌐 Ver la web</a>
+            <a asp-controller="Account" asp-action="Logout"     class="sidebar-link sidebar-logout">⬅ Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+        <div class="admin-header">
+            <h1>Gestión de Usuarios</h1>
+            <span class="admin-count">@Model.Count() usuarios</span>
+        </div>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="admin-toast">✓ @TempData["Exito"]</div>
+        }
+
+        <div class="admin-seccion">
+            <div class="tabla-wrapper">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Registro</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var u in Model)
+                        {
+                            <tr class="@(u.Activo ? "" : "fila-inactiva")">
+                                <td>@u.Id</td>
+                                <td>@u.Nombre</td>
+                                <td>@u.Email</td>
+                                <td>
+                                    <span class="badge-rol @u.Rol.ToLower()">@u.Rol</span>
+                                </td>
+                                <td>@u.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <span class="badge-estado @(u.Activo ? "pagado" : "cancelado")">
+                                        @(u.Activo ? "Activo" : "Inactivo")
+                                    </span>
+                                </td>
+                                <td class="acciones-col">
+                                    <form asp-action="ToggleUsuario" method="post" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@u.Id" />
+                                        <button type="submit" class="btn-tabla @(u.Activo ? "eliminar" : "editar")">
+                                            @(u.Activo ? "Desactivar" : "Activar")
+                                        </button>
+                                    </form>
+                                    <form asp-action="CambiarRol" method="post" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@u.Id" />
+                                        <select name="rol" onchange="this.form.submit()" class="select-rol">
+                                            <option value="Usuario" selected="@(u.Rol == "Usuario" ? "selected" : null)">Usuario</option>
+                                            <option value="Admin"   selected="@(u.Rol == "Admin"   ? "selected" : null)">Admin</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>

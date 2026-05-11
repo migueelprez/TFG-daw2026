@@ -1,19 +1,191 @@
 @model IEnumerable<TFG.Models.ProductoModel>
+@{
+    var categoriaActual = ViewBag.CategoriaActual as string ?? "Todos los productos";
+    var totalProductos = Model.Count();
+    // El breadcrumb ya está integrado dentro del categoria-header de esta vista (no se duplica con el global)
+}
 <link rel="stylesheet" href="~/css/productos.css" asp-append-version="true" />
-<div class="productos-container">
-    <h1>Categoría: @ViewBag.CategoriaActual</h1>
-    
-    <div class="productos-grid">
-        @foreach (var item in Model)
-        {
-            <div class="producto-card">
-                <img src="~/assets/images/@item.ImagenUrl" alt="@item.Nombre">
-                <div class="info">
-                    <h3>@item.Nombre</h3>
-                    <p>@item.Descripcion</p>
-                    <a href="#" class="btn-secundario">Ver detalles</a>
-                </div>
-            </div>
-        }
+
+@* CABECERA DE CATEGORÍA *@
+<section class="categoria-header">
+    <div class="categoria-header-inner">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <a asp-controller="Home" asp-action="Index">Inicio</a>
+            <span class="bc-sep">›</span>
+            <a asp-controller="Productos" asp-action="Productos">Productos</a>
+            @if (categoriaActual != "Todos los productos")
+            {
+                <span class="bc-sep">›</span>
+                <span class="bc-actual">@categoriaActual</span>
+            }
+        </nav>
+        <h1>@categoriaActual</h1>
+        <p class="cat-subtitulo">
+            @totalProductos producto@(totalProductos != 1 ? "s" : "") disponible@(totalProductos != 1 ? "s" : "")
+        </p>
+    </div>
+</section>
+
+@* FILTRO DE CATEGORÍAS *@
+<div class="filtro-bar">
+    <div class="filtro-inner">
+        <a asp-controller="Productos" asp-action="Productos"
+           class="filtro-btn @(categoriaActual == "Todos los productos" ? "activo" : "")">Todos</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Espinilleras"
+           class="filtro-btn @(categoriaActual == "Espinilleras" ? "activo" : "")">Espinilleras</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Empapadores"
+           class="filtro-btn @(categoriaActual == "Empapadores" ? "activo" : "")">Empapadores</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Lencería"
+           class="filtro-btn @(categoriaActual == "Lencería" ? "activo" : "")">Lencería</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Mobiliario"
+           class="filtro-btn @(categoriaActual == "Mobiliario" ? "activo" : "")">Mobiliario</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Movilidad"
+           class="filtro-btn @(categoriaActual == "Movilidad" ? "activo" : "")">Movilidad</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Antiescaras"
+           class="filtro-btn @(categoriaActual == "Antiescaras" ? "activo" : "")">Antiescaras</a>
+        <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Sujeción"
+           class="filtro-btn @(categoriaActual == "Sujeción" ? "activo" : "")">Sistemas de Sujeción</a>
     </div>
 </div>
+
+@* BUSCADOR *@
+<div class="buscador-bar">
+    <div class="buscador-inner">
+        <div class="buscador-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="buscador-icono">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="buscadorProductos" placeholder="Buscar productos..." autocomplete="off" />
+            <button type="button" id="btnLimpiarBusqueda" class="btn-limpiar-busqueda" style="display:none">✕</button>
+        </div>
+        <span id="resultadosBusqueda" class="resultados-texto"></span>
+    </div>
+</div>
+
+@* GRID DE PRODUCTOS *@
+<div class="productos-container">
+    @if (!Model.Any())
+    {
+        <div class="sin-productos">
+            <p>No hay productos disponibles en esta categoría por el momento.</p>
+            <a asp-controller="Productos" asp-action="Productos" class="btn-principal">Ver todos los productos</a>
+        </div>
+    }
+    else
+    {
+        <div class="productos-grid" id="productosGrid">
+            @foreach (var item in Model)
+            {
+                <div class="producto-card" data-nombre="@item.Nombre.ToLower()" data-desc="@item.Descripcion.ToLower()">
+                    <div class="card-imagen">
+                        <img src="~/assets/images/@item.ImagenUrl" alt="@item.Nombre" loading="lazy" />
+                        <span class="card-badge">@item.Categoria</span>
+                        @if (item.Stock == 0)
+                        {
+                            <span class="card-badge-agotado">Agotado</span>
+                        }
+                        else if (item.Stock <= 5)
+                        {
+                            <span class="card-badge-pocas">Últimas @item.Stock ud.</span>
+                        }
+                    </div>
+                    <div class="card-info">
+                        <h3>@item.Nombre</h3>
+                        <p>@item.Descripcion</p>
+                        <p class="card-precio">@item.Precio.ToString("N2") €</p>
+                        @if (item.Stock == 0)
+                        {
+                            <button class="btn-detalle btn-agotado" disabled>Sin stock</button>
+                        }
+                        else if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <form asp-controller="Carrito" asp-action="AgregarAlCarrito" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="productoId" value="@item.Id" />
+                                <input type="hidden" name="cantidad" value="1" />
+                                <button type="submit" class="btn-detalle">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:middle;margin-right:5px">
+                                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                                    </svg>
+                                    Añadir al carrito
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn-detalle">Iniciar sesión para comprar</a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div id="sinResultados" class="sin-productos" style="display:none">
+            <p>No se encontraron productos con ese término de búsqueda.</p>
+            <button type="button" onclick="limpiarBusqueda()" class="btn-principal">Ver todos</button>
+        </div>
+    }
+</div>
+
+@* CTA FINAL *@
+<section class="cta-productos">
+    <div class="cta-inner">
+        <h2>¿Necesita un presupuesto para su residencia?</h2>
+        <p>Trabajamos directamente con centros geriátricos. Contacte con nosotros y le asesoraremos sin compromiso.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+            <a asp-controller="Home" asp-action="Presupuesto" class="btn-principal">Solicitar presupuesto</a>
+            <a asp-controller="Home" asp-action="Contacto" class="btn-blanco-outline">Contactar con SENPRO</a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+<script>
+    const input = document.getElementById('buscadorProductos');
+    const btnLimpiar = document.getElementById('btnLimpiarBusqueda');
+    const resultadosTexto = document.getElementById('resultadosBusqueda');
+    const grid = document.getElementById('productosGrid');
+    const sinResultados = document.getElementById('sinResultados');
+
+    if (input) {
+        input.addEventListener('input', filtrar);
+        btnLimpiar.addEventListener('click', limpiarBusqueda);
+    }
+
+    function filtrar() {
+        const q = input.value.trim().toLowerCase();
+        btnLimpiar.style.display = q ? 'block' : 'none';
+
+        if (!q) {
+            limpiarBusqueda();
+            return;
+        }
+
+        const cards = grid ? grid.querySelectorAll('.producto-card') : [];
+        let visibles = 0;
+
+        cards.forEach(card => {
+            const nombre = card.dataset.nombre || '';
+            const desc = card.dataset.desc || '';
+            const match = nombre.includes(q) || desc.includes(q);
+            card.style.display = match ? '' : 'none';
+            if (match) visibles++;
+        });
+
+        if (sinResultados) sinResultados.style.display = visibles === 0 ? 'flex' : 'none';
+        if (grid) grid.style.display = visibles === 0 ? 'none' : '';
+        resultadosTexto.textContent = q ? `${visibles} resultado${visibles !== 1 ? 's' : ''}` : '';
+    }
+
+    function limpiarBusqueda() {
+        if (input) input.value = '';
+        if (btnLimpiar) btnLimpiar.style.display = 'none';
+        if (resultadosTexto) resultadosTexto.textContent = '';
+        const cards = grid ? grid.querySelectorAll('.producto-card') : [];
+        cards.forEach(card => card.style.display = '');
+        if (sinResultados) sinResultados.style.display = 'none';
+        if (grid) grid.style.display = '';
+    }
+</script>
+}

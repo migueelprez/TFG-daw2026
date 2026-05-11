@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Confirmación de pago — SENPRO";
+    var pagado = ViewBag.PaymentStatus == "paid";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Mi carrito", "/Carrito/Index"),
+        ("Confirmación de pago", null)
+    };
+}
+<link rel="stylesheet" href="~/css/pago.css" asp-append-version="true" />
+
+<div class="confirmacion-wrapper">
+    @if (pagado)
+    {
+        <div class="confirmacion-card exito">
+            <div class="confirmacion-icono">✅</div>
+            <h1>¡Pago completado!</h1>
+            <p>Gracias por tu pedido. Hemos recibido tu pago de <strong>@(((double)ViewBag.AmountTotal).ToString("N2")) €</strong>.</p>
+            @if (ViewBag.CustomerEmail != null)
+            {
+                <p>Se enviará una confirmación a <strong>@ViewBag.CustomerEmail</strong>.</p>
+            }
+            <p class="confirmacion-info">Nuestro equipo procesará tu pedido y se pondrá en contacto contigo para coordinar la entrega.</p>
+            <div class="confirmacion-acciones">
+                <a asp-controller="Home" asp-action="Index" class="btn-pagar">Volver al inicio</a>
+                <a asp-controller="Productos" asp-action="Productos" class="btn-vaciar">Seguir comprando</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="confirmacion-card error">
+            <div class="confirmacion-icono">❌</div>
+            <h1>Pago no completado</h1>
+            <p>El pago no se ha procesado correctamente o fue cancelado. No se ha realizado ningún cargo.</p>
+            <div class="confirmacion-acciones">
+                <a asp-controller="Carrito" asp-action="Index" class="btn-pagar">Volver al carrito</a>
+                <a asp-controller="Home" asp-action="Contacto" class="btn-vaciar">Contactar soporte</a>
+            </div>
+        </div>
+    }
+</div>

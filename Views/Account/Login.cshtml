@@ -1,0 +1,63 @@
+@model TFG.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Iniciar sesión — SENPRO";
+    Layout = "_Layout";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Iniciar sesión", null)
+    };
+}
+<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>SENPRO</span>
+        </div>
+
+        <h1 class="auth-title">Iniciar sesión</h1>
+        <p class="auth-sub">Accede a tu cuenta para realizar pedidos</p>
+
+        <form asp-action="Login" method="post">
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="auth-error"></div>
+
+            <div class="form-grupo">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" placeholder="tu@email.com" autocomplete="email" />
+                <span asp-validation-for="Email" class="campo-error"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label asp-for="Password">Contraseña</label>
+                <input asp-for="Password" type="password" placeholder="••••••••" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="campo-error"></span>
+            </div>
+
+            <div class="form-check">
+                <input asp-for="RememberMe" type="checkbox" id="rememberMe" />
+                <label for="rememberMe">Recordarme</label>
+            </div>
+
+            <button type="submit" class="btn-auth">Entrar</button>
+        </form>
+
+        <p class="auth-link">
+            <a asp-controller="Account" asp-action="ForgotPassword">¿Olvidaste tu contraseña?</a>
+        </p>
+
+        <p class="auth-link">
+            ¿No tienes cuenta?
+            <a asp-controller="Account" asp-action="Register">Regístrate aquí</a>
+        </p>
+
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,239 @@
+/* ==============================================
+   SOLICITUD PRESUPUESTO — presupuesto.css (SENPRO)
+   ============================================== */
+
+.pres-wrapper {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    min-height: calc(100vh - 68px);
+}
+
+/* ── COLUMNA IZQUIERDA ────────────────────────── */
+.pres-info {
+    background: linear-gradient(160deg, #0f172a 0%, #1a3d8f 60%, #2264d1 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 70px 48px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pres-info::before {
+    content: '';
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    bottom: -100px;
+    right: -100px;
+}
+
+.pres-info-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 340px;
+}
+
+.pres-pretitulo {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 14px;
+}
+
+.pres-info h1 {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 18px;
+}
+
+.pres-desc {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.65;
+    margin-bottom: 40px;
+}
+
+.pres-ventajas {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 36px;
+}
+
+.pres-ventaja {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.pres-icono {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.14);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pres-icono svg {
+    width: 18px;
+    height: 18px;
+}
+
+.pres-vent-titulo {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.pres-vent-desc {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.65);
+}
+
+.pres-horario {
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ── COLUMNA DERECHA ──────────────────────────── */
+.pres-form-panel {
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 60px;
+}
+
+.pres-form-inner {
+    width: 100%;
+    max-width: 580px;
+}
+
+.pres-form-inner h2 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+}
+
+.pres-subtitulo {
+    color: #64748b;
+    font-size: 0.93rem;
+    margin-bottom: 32px;
+}
+
+/* ── FORMULARIO ──────────────────────────────── */
+.form-pres {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-fila-pres {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group-pres {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group-pres label {
+    font-size: 0.83rem;
+    font-weight: 700;
+    color: #374151;
+}
+
+.req { color: #2264d1; }
+
+.form-group-pres input,
+.form-group-pres textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.93rem;
+    color: #0f172a;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    font-family: inherit;
+}
+
+.form-group-pres input::placeholder,
+.form-group-pres textarea::placeholder { color: #94a3b8; }
+
+.form-group-pres input:focus,
+.form-group-pres textarea:focus {
+    border-color: #2264d1;
+    box-shadow: 0 0 0 3px rgba(34,100,209,0.12);
+}
+
+.form-group-pres textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+.campo-error {
+    color: #dc2626;
+    font-size: 0.8rem;
+}
+
+.btn-pres-enviar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: #2264d1;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.97rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.18s, box-shadow 0.25s;
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+.btn-pres-enviar:hover {
+    background: #1a4da3;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(34,100,209,0.28);
+}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width: 1024px) {
+    .pres-wrapper { grid-template-columns: 340px 1fr; }
+    .pres-info { padding: 60px 36px; }
+    .pres-form-panel { padding: 60px 40px; }
+}
+
+@media (max-width: 780px) {
+    .pres-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .pres-info { padding: 48px 5%; }
+    .pres-info-inner { max-width: 100%; }
+    .pres-form-panel { padding: 48px 5%; }
+    .form-fila-pres { grid-template-columns: 1fr; }
+    .btn-pres-enviar { width: 100%; justify-content: center; }
+}

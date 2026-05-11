@@ -1,0 +1,93 @@
+@model IEnumerable<TFG.Models.Pedido>
+@{
+    ViewData["Title"] = "Gestión de Pedidos";
+}
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="admin-wrapper">
+    <aside class="admin-sidebar">
+        <div class="sidebar-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>Admin Panel</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a asp-controller="Admin" asp-action="Index"        class="sidebar-link">📊 Dashboard</a>
+            <a asp-controller="Admin" asp-action="Productos"    class="sidebar-link">📦 Productos</a>
+            <a asp-controller="Admin" asp-action="Usuarios"     class="sidebar-link">👥 Usuarios</a>
+            <a asp-controller="Admin" asp-action="Pedidos"      class="sidebar-link activo">🧾 Pedidos</a>
+            <a asp-controller="Admin" asp-action="Presupuestos" class="sidebar-link">💼 Presupuestos</a>
+            <a asp-controller="Admin" asp-action="Estadisticas" class="sidebar-link">📈 Estadísticas</a>
+            <hr class="sidebar-divider" />
+            <a asp-controller="Home"    asp-action="Index"  class="sidebar-link">🌐 Ver la web</a>
+            <a asp-controller="Account" asp-action="Logout" class="sidebar-link sidebar-logout">⬅ Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+        <div class="admin-header">
+            <h1>Gestión de Pedidos</h1>
+        </div>
+
+        <div class="admin-seccion">
+            @if (!Model.Any())
+            {
+                <p style="color:#64748b;padding:32px 0">No hay pedidos todavía.</p>
+            }
+            else
+            {
+                <div class="tabla-scroll">
+                    <table class="admin-tabla">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Líneas</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in Model)
+                            {
+                                <tr>
+                                    <td>@p.Id</td>
+                                    <td>@p.FechaPedido.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        @if (p.Usuario != null)
+                                        {
+                                            <strong>@p.Usuario.Nombre</strong><br/>
+                                            <small style="color:#64748b">@p.Usuario.Email</small>
+                                        }
+                                    </td>
+                                    <td>@(p.Lineas?.Count ?? 0) artículo@(p.Lineas?.Count != 1 ? "s" : "")</td>
+                                    <td><strong>@p.Total.ToString("N2") €</strong></td>
+                                    <td>
+                                        @{
+                                            var estadoClass = p.Estado == "Pagado" ? "pagado" : p.Estado == "Cancelado" ? "cancelado" : "pendiente";
+                                        }
+                                        <span class="estado-pedido @estadoClass">@p.Estado</span>
+                                    </td>
+                                    <td>
+                                        <a asp-action="DetallePedido" asp-route-id="@p.Id"
+                                           class="btn-admin-accion" style="font-size:0.8rem;padding:6px 14px">
+                                            Ver / PDF
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </main>
+</div>
+
+<style>
+.estado-pedido { font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:50px;display:inline-block;text-transform:uppercase;letter-spacing:0.05em; }
+.estado-pedido.pendiente  { background:#fef3c7;color:#92400e; }
+.estado-pedido.pagado     { background:#dcfce7;color:#166534; }
+.estado-pedido.cancelado  { background:#fef2f2;color:#991b1b; }
+</style>

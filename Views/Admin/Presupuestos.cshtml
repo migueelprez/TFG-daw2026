@@ -1,0 +1,106 @@
+@model IEnumerable<TFG.Models.SolicitudPresupuesto>
+@{
+    ViewData["Title"] = "Solicitudes de Presupuesto";
+}
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="admin-wrapper">
+    <aside class="admin-sidebar">
+        <div class="sidebar-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>Admin Panel</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a asp-controller="Admin" asp-action="Index"        class="sidebar-link">📊 Dashboard</a>
+            <a asp-controller="Admin" asp-action="Productos"    class="sidebar-link">📦 Productos</a>
+            <a asp-controller="Admin" asp-action="Usuarios"     class="sidebar-link">👥 Usuarios</a>
+            <a asp-controller="Admin" asp-action="Pedidos"      class="sidebar-link">🧾 Pedidos</a>
+            <a asp-controller="Admin" asp-action="Presupuestos" class="sidebar-link activo">💼 Presupuestos</a>
+            <a asp-controller="Admin" asp-action="Estadisticas" class="sidebar-link">📈 Estadísticas</a>
+            <hr class="sidebar-divider" />
+            <a asp-controller="Home"    asp-action="Index"  class="sidebar-link">🌐 Ver la web</a>
+            <a asp-controller="Account" asp-action="Logout" class="sidebar-link sidebar-logout">⬅ Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+        <div class="admin-header">
+            <h1>Solicitudes de presupuesto</h1>
+        </div>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="alerta-admin-ok">@TempData["Exito"]</div>
+        }
+
+        <div class="admin-seccion">
+            @if (!Model.Any())
+            {
+                <p style="color:#64748b;padding:32px 0">No hay solicitudes de presupuesto todavía.</p>
+            }
+            else
+            {
+                <div class="tabla-scroll">
+                    <table class="admin-tabla">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Fecha</th>
+                                <th>Residencia</th>
+                                <th>Responsable</th>
+                                <th>Email / Tel.</th>
+                                <th>Residentes</th>
+                                <th>Estado</th>
+                                <th>Detalle</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>@s.Id</td>
+                                    <td>@s.FechaSolicitud.ToString("dd/MM/yy")</td>
+                                    <td><strong>@s.Residencia</strong></td>
+                                    <td>@s.NombreContacto</td>
+                                    <td>
+                                        <small>@s.Email</small><br/>
+                                        <small>@s.Telefono</small>
+                                    </td>
+                                    <td>@(s.NumResidentes > 0 ? s.NumResidentes.ToString() : "—")</td>
+                                    <td>
+                                        <span class="estado-pres estado-@s.Estado.ToLower()">@s.Estado</span>
+                                    </td>
+                                    <td style="max-width:220px;font-size:0.83rem;color:#475569">
+                                        @(s.Detalle.Length > 80 ? s.Detalle.Substring(0, 80) + "…" : s.Detalle)
+                                    </td>
+                                    <td>
+                                        <form asp-action="CambiarEstadoPresupuesto" method="post" style="display:flex;gap:6px;align-items:center">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@s.Id" />
+                                            <select name="estado" class="select-estado">
+                                                <option value="Pendiente"  selected="@(s.Estado == "Pendiente" ? "selected" : null)">Pendiente</option>
+                                                <option value="Enviado"    selected="@(s.Estado == "Enviado"   ? "selected" : null)">Enviado</option>
+                                                <option value="Cerrado"    selected="@(s.Estado == "Cerrado"   ? "selected" : null)">Cerrado</option>
+                                            </select>
+                                            <button type="submit" class="btn-admin-accion" style="padding:6px 12px;font-size:0.78rem">Guardar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </main>
+</div>
+
+<style>
+.estado-pres { font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:50px;display:inline-block;text-transform:uppercase;letter-spacing:0.05em; }
+.estado-pendiente { background:#fef3c7;color:#92400e; }
+.estado-enviado   { background:#dbeafe;color:#1e40af; }
+.estado-cerrado   { background:#dcfce7;color:#166534; }
+.select-estado { border:1.5px solid #e2e8f0;border-radius:8px;padding:5px 10px;font-size:0.83rem;color:#374151;background:#fff;outline:none;cursor:pointer; }
+.alerta-admin-ok { background:#ecfdf5;border:1.5px solid #6ee7b7;color:#065f46;padding:12px 18px;border-radius:10px;margin:0 0 20px;font-size:0.9rem;font-weight:500; }
+</style>

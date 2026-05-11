@@ -1,0 +1,217 @@
+/* ==============================================
+   AUTENTICACIÓN — auth.css  (SENPRO)
+   ============================================== */
+
+.auth-wrapper {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%);
+    padding: 40px 20px;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 44px 40px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(34, 100, 209, 0.10);
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.auth-logo img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2264d1;
+}
+
+.auth-logo span {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.auth-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.auth-sub {
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+}
+
+/* Grupos de campo */
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.form-grupo label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.form-grupo input,
+.form-grupo textarea,
+.form-grupo select {
+    padding: 11px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+    outline: none;
+    width: 100%;
+}
+
+.form-grupo input:focus,
+.form-grupo textarea:focus,
+.form-grupo select:focus {
+    border-color: #2264d1;
+    box-shadow: 0 0 0 3px rgba(34, 100, 209, 0.12);
+}
+
+.form-grupo textarea { resize: vertical; }
+
+/* Check recordarme */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.form-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #2264d1;
+    cursor: pointer;
+}
+
+/* Botón principal */
+.btn-auth {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border-radius: 50px;
+    background: #2264d1;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+}
+
+.btn-auth:hover {
+    background: #1a4da3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 100, 209, 0.25);
+}
+
+/* Link inferior */
+.auth-link {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.auth-link a {
+    color: #2264d1;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-link a:hover { text-decoration: underline; }
+
+/* Errores */
+.auth-error {
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #c53030;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+}
+
+.campo-error {
+    color: #c53030;
+    font-size: 0.82rem;
+}
+
+/* Cuentas demo */
+.auth-demo {
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: #666;
+    border: 1px dashed #dee2e6;
+}
+
+.auth-demo p { margin-bottom: 4px; }
+.auth-demo code {
+    background: #e9ecef;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #495057;
+}
+
+@media (max-width: 480px) {
+    .auth-card { padding: 30px 24px; }
+}
+
+/* ── RECUPERACIÓN DE CONTRASEÑA ── */
+.auth-success {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #ecfdf5;
+    border: 1.5px solid #6ee7b7;
+    color: #065f46;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.auth-debug {
+    background: #fef9c3;
+    border: 1px solid #fde047;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.83rem;
+    color: #713f12;
+    margin-bottom: 16px;
+    word-break: break-all;
+}

@@ -1,0 +1,140 @@
+@model IEnumerable<TFG.Models.ProductoModel>
+@{
+    ViewData["Title"] = "Protector de Espinilla SENPRO — Producto Estrella";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Productos", "/Productos/Productos"),
+        ("Protector de Espinilla", null)
+    };
+}
+<link rel="stylesheet" href="~/css/espinillera.css" asp-append-version="true" />
+
+@* ══════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════ *@
+<section class="epi-hero">
+    <div class="epi-hero-texto">
+        <span class="epi-badge">Producto Estrella</span>
+        <h1>Protector de Espinilla SENPRO</h1>
+        <p class="epi-hero-desc">
+            Diseñado específicamente para la piel frágil de la tercera edad. Tecnología de
+            absorción de choque multicapa que previene hematomas, lesiones por impacto y
+            lesiones cutáneas en el día a día de la residencia.
+        </p>
+        <div class="epi-hero-acciones">
+            <a href="#gama" class="btn-principal">Ver la gama completa</a>
+            <a asp-controller="Home" asp-action="Contacto" class="btn-secundario">Solicitar muestra</a>
+        </div>
+    </div>
+    <div class="epi-hero-imagen">
+        <div class="epi-img-anillo">
+            <img src="~/assets/images/protector_espinilla/espinillera.png"
+                 alt="Espinillera SENPRO Premium" />
+        </div>
+    </div>
+</section>
+
+@* ══════════════════════════════════════════════
+   CARACTERÍSTICAS
+   ══════════════════════════════════════════════ *@
+<section class="epi-features">
+    <div class="epi-features-inner">
+        <h2 class="epi-titulo-seccion">Por qué lo eligen las residencias</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="feature-num">01</span>
+                </div>
+                <h3>Tejido hipoalergénico</h3>
+                <p>Fabricado con materiales certificados, seguros para pieles sensibles,
+                   secas o con dermatitis, habituales en la tercera edad.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="feature-num">02</span>
+                </div>
+                <h3>Absorción de choque multicapa</h3>
+                <p>El núcleo de espuma de alta densidad dispersa el impacto antes de
+                   que llegue a la piel, reduciendo hematomas hasta en un 80&nbsp;%.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="feature-num">03</span>
+                </div>
+                <h3>Cierre ajustable</h3>
+                <p>Velcro anatómico que se adapta al perímetro de la pierna sin presionar,
+                   apto para personas con edemas o vendajes.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="feature-num">04</span>
+                </div>
+                <h3>Fácil colocación</h3>
+                <p>El personal cuidador puede colocarlo y retirarlo en segundos, sin ayuda
+                   del residente y sin necesitar herramientas especiales.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ══════════════════════════════════════════════
+   GAMA DE PRODUCTOS
+   ══════════════════════════════════════════════ *@
+<section class="epi-gama" id="gama">
+    <div class="epi-gama-inner">
+        <h2 class="epi-titulo-seccion">Nuestra gama completa</h2>
+        <p class="epi-subtitulo-seccion">
+            Cuatro referencias para adaptarse a cada necesidad, todas con la misma garantía SENPRO.
+        </p>
+
+        <div class="epi-grid">
+            @foreach (var item in Model)
+            {
+                <div class="epi-card">
+                    <div class="epi-card-imagen">
+                        <img src="~/assets/images/@item.ImagenUrl" alt="@item.Nombre" loading="lazy" />
+                    </div>
+                    <div class="epi-card-info">
+                        <h3>@item.Nombre</h3>
+                        <p>@item.Descripcion</p>
+                        <div class="epi-card-footer">
+                            <span class="epi-precio">@item.Precio.ToString("N2") €</span>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <form asp-controller="Carrito" asp-action="AgregarAlCarrito" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="productoId" value="@item.Id" />
+                                    <input type="hidden" name="cantidad"   value="1" />
+                                    <button type="submit" class="epi-btn-add">Añadir al carrito</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a asp-controller="Account" asp-action="Login" class="epi-btn-add epi-btn-login">
+                                    Acceder para comprar
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@* ══════════════════════════════════════════════
+   CTA FINAL
+   ══════════════════════════════════════════════ *@
+<section class="epi-cta">
+    <div class="epi-cta-inner">
+        <h2>¿Quiere probarlo en su residencia?</h2>
+        <p>
+            Ofrecemos muestras gratuitas para centros geriátricos. Contacte con nuestro equipo
+            y le enviamos una unidad sin compromiso para que lo evalúe con su equipo de cuidado.
+        </p>
+        <a asp-controller="Home" asp-action="Contacto" class="btn-blanco-outline">
+            Solicitar muestra gratuita
+        </a>
+    </div>
+</section>

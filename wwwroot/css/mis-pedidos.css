@@ -1,0 +1,193 @@
+/* ==============================================
+   MIS PEDIDOS — mis-pedidos.css  (SENPRO)
+   ============================================== */
+
+.pedidos-wrapper {
+    min-height: calc(100vh - 68px);
+    background: #f8fafc;
+}
+
+.pedidos-header {
+    background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%);
+    padding: 50px 8% 40px;
+    border-bottom: 1px solid #dce8fb;
+}
+
+.pedidos-header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.pedidos-header h1 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.pedidos-sub {
+    color: #64748b;
+    font-size: 0.97rem;
+}
+
+.pedidos-contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 8%;
+}
+
+/* ── SIN PEDIDOS ─────────────────────────────── */
+.pedidos-vacio {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.pedidos-vacio svg {
+    width: 64px;
+    height: 64px;
+    color: #cbd5e1;
+    margin: 0 auto 24px;
+    display: block;
+}
+
+.pedidos-vacio h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+.pedidos-vacio p {
+    color: #64748b;
+    margin-bottom: 28px;
+    font-size: 0.97rem;
+}
+
+/* ── LISTA DE PEDIDOS ────────────────────────── */
+.pedidos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pedido-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(15,23,42,0.05);
+    transition: box-shadow 0.2s;
+}
+
+.pedido-card:hover {
+    box-shadow: 0 6px 24px rgba(34,100,209,0.1);
+}
+
+.pedido-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #fafbff;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pedido-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pedido-id {
+    font-size: 0.97rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.pedido-fecha {
+    font-size: 0.83rem;
+    color: #94a3b8;
+}
+
+.pedido-acciones {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.estado-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.estado-pendiente { background: #fef3c7; color: #92400e; }
+.estado-pagado    { background: #ecfdf5; color: #065f46; }
+.estado-cancelado { background: #fef2f2; color: #991b1b; }
+
+.pedido-total {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #2264d1;
+}
+
+/* ── LÍNEAS ──────────────────────────────────── */
+.pedido-lineas {
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pedido-linea {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.linea-nombre {
+    flex: 1;
+    color: #374151;
+    font-weight: 500;
+}
+
+.linea-detalle {
+    color: #64748b;
+    font-size: 0.83rem;
+    white-space: nowrap;
+}
+
+.linea-subtotal {
+    color: #0f172a;
+    font-weight: 700;
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: right;
+}
+
+.pedido-footer-info {
+    padding: 10px 24px 14px;
+}
+
+.pedido-stripe {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width: 600px) {
+    .pedidos-contenido { padding: 24px 5%; }
+    .pedidos-header { padding: 36px 5% 28px; }
+    .pedido-header { flex-direction: column; align-items: flex-start; }
+    .pedido-linea { flex-wrap: wrap; }
+    .linea-subtotal { min-width: unset; }
+}

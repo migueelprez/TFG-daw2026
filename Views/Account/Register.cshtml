@@ -1,0 +1,64 @@
+@model TFG.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Crear cuenta — SENPRO";
+    Layout = "_Layout";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Crear cuenta", null)
+    };
+}
+<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>SENPRO</span>
+        </div>
+
+        <h1 class="auth-title">Crear cuenta</h1>
+        <p class="auth-sub">Regístrate para acceder al catálogo y realizar pedidos</p>
+
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="auth-error"></div>
+
+            <div class="form-grupo">
+                <label asp-for="Nombre">Nombre completo</label>
+                <input asp-for="Nombre" placeholder="Tu nombre" autocomplete="name" />
+                <span asp-validation-for="Nombre" class="campo-error"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" placeholder="tu@email.com" autocomplete="email" />
+                <span asp-validation-for="Email" class="campo-error"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label asp-for="Password">Contraseña</label>
+                <input asp-for="Password" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+                <span asp-validation-for="Password" class="campo-error"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label asp-for="ConfirmPassword">Confirmar contraseña</label>
+                <input asp-for="ConfirmPassword" type="password" placeholder="Repite la contraseña" autocomplete="new-password" />
+                <span asp-validation-for="ConfirmPassword" class="campo-error"></span>
+            </div>
+
+            <button type="submit" class="btn-auth">Crear cuenta</button>
+        </form>
+
+        <p class="auth-link">
+            ¿Ya tienes cuenta?
+            <a asp-controller="Account" asp-action="Login">Inicia sesión</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

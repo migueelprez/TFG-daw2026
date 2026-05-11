@@ -1,0 +1,73 @@
+@model IEnumerable<TFG.Models.ProductoModel>
+@{
+    ViewData["Title"] = "Gestión de Productos — Admin";
+}
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="admin-wrapper">
+    <aside class="admin-sidebar">
+        <div class="sidebar-logo">
+            <img src="~/assets/images/logo.jpg" alt="SENPRO" />
+            <span>Admin Panel</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a asp-controller="Admin" asp-action="Index"        class="sidebar-link">📊 Dashboard</a>
+            <a asp-controller="Admin" asp-action="Productos"    class="sidebar-link activo">📦 Productos</a>
+            <a asp-controller="Admin" asp-action="Usuarios"     class="sidebar-link">👥 Usuarios</a>
+            <a asp-controller="Admin" asp-action="Pedidos"      class="sidebar-link">🧾 Pedidos</a>
+            <a asp-controller="Admin" asp-action="Presupuestos" class="sidebar-link">💼 Presupuestos</a>
+            <a asp-controller="Admin" asp-action="Estadisticas" class="sidebar-link">📈 Estadísticas</a>
+            <hr class="sidebar-divider" />
+            <a asp-controller="Home"  asp-action="Index"        class="sidebar-link">🌐 Ver la web</a>
+            <a asp-controller="Account" asp-action="Logout"     class="sidebar-link sidebar-logout">⬅ Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+        <div class="admin-header">
+            <h1>Gestión de Productos</h1>
+            <a asp-action="NuevoProducto" class="btn-admin-accion">+ Nuevo producto</a>
+        </div>
+
+        @if (TempData["Exito"] != null)
+        {
+            <div class="admin-toast">✓ @TempData["Exito"]</div>
+        }
+
+        <div class="admin-seccion">
+            <div class="tabla-wrapper">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model)
+                        {
+                            <tr>
+                                <td>@p.Id</td>
+                                <td>@p.Nombre</td>
+                                <td><span class="badge-categoria">@p.Categoria</span></td>
+                                <td>@p.Precio.ToString("N2") €</td>
+                                <td class="acciones-col">
+                                    <a asp-action="EditarProducto" asp-route-id="@p.Id" class="btn-tabla editar">Editar</a>
+                                    <form asp-action="EliminarProducto" method="post" style="display:inline"
+                                          onsubmit="return confirm('¿Eliminar este producto?')">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@p.Id" />
+                                        <button type="submit" class="btn-tabla eliminar">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>

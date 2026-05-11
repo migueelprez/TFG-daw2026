@@ -1,37 +1,235 @@
-﻿@{
-    ViewData["Title"] = "Inicio - SENPRO";
+@{
+    ViewData["Title"] = "Inicio — SENPRO";
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
 }
+
+@* ══════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════ *@
 <section class="hero-section">
     <div class="hero-text">
-        <h1>Suministros de confianza para centros geriátricos</h1>
-        <p>En SENPRO garantizamos el bienestar y la seguridad de los mayores con productos de alta calidad diseñados
-            para el cuidado profesional.</p>
+        <span class="hero-pretitulo">Especialistas en suministros geriátricos</span>
+        <h1>El bienestar de tus residentes, nuestra prioridad</h1>
+        <p>En SENPRO garantizamos la seguridad y el confort de los mayores con productos de primera calidad diseñados para el cuidado profesional.</p>
+        <div class="hero-acciones">
+            <a asp-controller="Productos" asp-action="Productos" class="btn-principal">Ver catálogo completo</a>
+            <a asp-controller="Home" asp-action="QuienesSomos" class="btn-secundario">Conocer SENPRO →</a>
+        </div>
+    </div>
+    <div class="hero-imagen">
+        <img src="~/assets/images/anciano.png" alt="Cuidado de mayores" class="img-fluida2" />
+    </div>
+</section>
 
-            <div class="hero-acciones">
-                <a href="#productos" class="btn-principal">Ver Catálogo</a>
-                <a href="#contacto" class="btn-secundario">Saber más</a>
-            </div>
+@* ══════════════════════════════════════════════
+   BARRA DE CONFIANZA
+   ══════════════════════════════════════════════ *@
+<div class="trust-bar">
+    <div class="trust-inner">
+        <div class="trust-item">
+            <span class="trust-num">+200</span>
+            <span class="trust-desc">Centros atendidos</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+            <span class="trust-num">+500</span>
+            <span class="trust-desc">Referencias en catálogo</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+            <span class="trust-num">24 h</span>
+            <span class="trust-desc">Entrega estándar</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+            <span class="trust-num">+15</span>
+            <span class="trust-desc">Años de experiencia</span>
+        </div>
+    </div>
+</div>
+
+@* ══════════════════════════════════════════════
+   PRODUCTO ESTRELLA
+   ══════════════════════════════════════════════ *@
+<section class="seccion-estrella">
+    <div class="estrella-container">
+        <div class="estrella-imagen">
+            <img src="~/assets/images/protector_espinilla/espinillera.png" alt="Espinillera SENPRO" />
+        </div>
+        <div class="estrella-texto">
+            <span class="tag">Producto Destacado</span>
+            <h2>Protección avanzada con nuestro Protector de Espinilla</h2>
+            <p>Diseñada específicamente para pieles sensibles en la tercera edad. Evita hematomas y lesiones por impacto con nuestra tecnología de absorción de choque y tejido transpirable.</p>
+            <a asp-controller="Productos" asp-action="Espinillera" class="btn-blanco-outline">Ver detalles técnicos</a>
+        </div>
+    </div>
+</section>
+
+@* ══════════════════════════════════════════════
+   CATEGORÍAS
+   ══════════════════════════════════════════════ *@
+<section class="categorias-section">
+    <div class="categorias-inner">
+        <div class="seccion-cabecera">
+            <span class="seccion-label">Nuestro catálogo</span>
+            <h2>Todo lo que necesita tu residencia</h2>
+            <p>Más de 500 referencias distribuidas en 7 familias de producto, seleccionadas con criterios de calidad y seguridad geriátrica.</p>
         </div>
 
-        <div class="hero-imagen">
-            <img src="~/assets/images/anciano.png" alt="Cuidado de mayores" class="img-fluida2">
-                
+        <div class="categorias-grid">
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Espinilleras" class="cat-card">
+                <div class="cat-icono" style="background:#eff6ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2264d1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
                 </div>
-            </section>
-            <section class="seccion-estrella">
-                <div class="estrella-container">
-                    <div class="estrella-imagen">
-                        <img src="~/assets/images/protector_espinilla/espinillera.png" alt="Espinillera SENPRO" />
-                    </div>
-                    <div class="estrella-texto">
-                        <span class="tag">Producto Destacado</span>
-                        <h2>Protección avanzada con nuestro Protector de Espinilla</h2>
-                        <p>Diseñada específicamente para pieles sensibles en la tercera edad. Evita hematomas y lesiones por impacto
-                            con nuestra tecnología de absorción de choque y tejido transpirable.</p>
-                            <a href="#" class="btn-blanco-outline">Ver detalles técnicos</a>
-                        </div>
-                    </div>
-                </section>
+                <span class="cat-nombre">Protectores de Espinilla</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Empapadores" class="cat-card">
+                <div class="cat-icono" style="background:#ecfdf5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Empapadores</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Lencería" class="cat-card">
+                <div class="cat-icono" style="background:#fff7ed">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Lencería Adaptada</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Mobiliario" class="cat-card">
+                <div class="cat-icono" style="background:#fdf4ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Mobiliario Geriátrico</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Movilidad" class="cat-card">
+                <div class="cat-icono" style="background:#fef9c3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Movilidad y Ayudas</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Antiescaras" class="cat-card">
+                <div class="cat-icono" style="background:#fef2f2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Sistemas Antiescaras</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Categoria" asp-route-id="Sujeción" class="cat-card">
+                <div class="cat-icono" style="background:#f0fdf4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Sistemas de Sujeción</span>
+                <span class="cat-flecha">→</span>
+            </a>
+
+            <a asp-controller="Productos" asp-action="Productos" class="cat-card cat-card-todos">
+                <div class="cat-icono" style="background:#f0f5ff">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#2264d1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                </div>
+                <span class="cat-nombre">Ver catálogo completo</span>
+                <span class="cat-flecha">→</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+@* ══════════════════════════════════════════════
+   POR QUÉ SENPRO
+   ══════════════════════════════════════════════ *@
+<section class="porque-section">
+    <div class="porque-inner">
+        <div class="seccion-cabecera claro">
+            <span class="seccion-label claro">Por qué elegirnos</span>
+            <h2>Comprometidos con la excelencia geriátrica</h2>
+            <p>Llevamos años siendo el proveedor de confianza de residencias y centros de día en toda España.</p>
+        </div>
+
+        <div class="porque-grid">
+            <div class="porque-card">
+                <div class="porque-icono">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <h3>Calidad certificada</h3>
+                <p>Todos nuestros productos superan los controles más exigentes antes de llegar a tu residencia.</p>
+            </div>
+
+            <div class="porque-card">
+                <div class="porque-icono">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                </div>
+                <h3>Envío en 24 h</h3>
+                <p>Entrega rápida y segura en toda la Península. Tu pedido llega al día siguiente.</p>
+            </div>
+
+            <div class="porque-card">
+                <div class="porque-icono">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <h3>Asesoramiento experto</h3>
+                <p>Nuestro equipo de profesionales resuelve cualquier duda sobre las necesidades de tus pacientes.</p>
+            </div>
+
+            <div class="porque-card">
+                <div class="porque-icono">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <h3>Precios por volumen</h3>
+                <p>Descuentos especiales para pedidos de residencias. Solicita tu presupuesto personalizado.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ══════════════════════════════════════════════
+   CTA FINAL
+   ══════════════════════════════════════════════ *@
+<section class="cta-home">
+    <div class="cta-home-inner">
+        <div class="cta-texto">
+            <h2>¿Gestionas una residencia?</h2>
+            <p>Solicita un presupuesto personalizado sin compromiso y te respondemos en menos de 24 horas.</p>
+        </div>
+        <div class="cta-acciones">
+            <a asp-controller="Home" asp-action="Presupuesto" class="btn-principal">Solicitar presupuesto</a>
+            <a asp-controller="Home" asp-action="Contacto" class="btn-blanco-outline-dark">Contactar con SENPRO</a>
+        </div>
+    </div>
+</section>

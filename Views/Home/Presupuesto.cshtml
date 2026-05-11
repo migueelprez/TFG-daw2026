@@ -1,0 +1,141 @@
+@model TFG.Models.SolicitudPresupuesto
+@{
+    ViewData["Title"] = "Solicitar Presupuesto — SENPRO";
+    Layout = "_Layout";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Solicitar Presupuesto", null)
+    };
+}
+<link rel="stylesheet" href="~/css/presupuesto.css" asp-append-version="true" />
+
+<div class="pres-wrapper">
+
+    @* ── COLUMNA IZQUIERDA ── *@
+    <aside class="pres-info">
+        <div class="pres-info-inner">
+            <span class="pres-pretitulo">Solución B2B</span>
+            <h1>Presupuesto personalizado para tu residencia</h1>
+            <p class="pres-desc">
+                Cuéntanos cuántos residentes tiene tu centro y qué productos necesitas.
+                Nuestro equipo te enviará una propuesta adaptada a tu volumen de compra.
+            </p>
+
+            <div class="pres-ventajas">
+                <div class="pres-ventaja">
+                    <div class="pres-icono">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="pres-vent-titulo">Precios especiales por volumen</span>
+                        <span class="pres-vent-desc">Descuentos progresivos a partir de 10 unidades.</span>
+                    </div>
+                </div>
+                <div class="pres-ventaja">
+                    <div class="pres-icono">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="pres-vent-titulo">Envío rápido garantizado</span>
+                        <span class="pres-vent-desc">Entrega en 24–48 h en la Península.</span>
+                    </div>
+                </div>
+                <div class="pres-ventaja">
+                    <div class="pres-icono">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="pres-vent-titulo">Asesoramiento personalizado</span>
+                        <span class="pres-vent-desc">Un comercial dedicado a tu residencia.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pres-horario">
+                <span class="pres-vent-desc">Respuesta en menos de 24 h · Lun–Vie 09:00–18:00</span>
+            </div>
+        </div>
+    </aside>
+
+    @* ── COLUMNA DERECHA ── *@
+    <main class="pres-form-panel">
+        <div class="pres-form-inner">
+
+            @if (ViewBag.Exito != null)
+            {
+                <div class="alerta-exito" style="display:flex;align-items:center;gap:12px;background:#ecfdf5;border:1.5px solid #6ee7b7;color:#065f46;padding:16px 20px;border-radius:12px;margin-bottom:28px;font-size:0.95rem;font-weight:500">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;flex-shrink:0">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                        <strong>¡Solicitud enviada correctamente!</strong><br/>
+                        <span>Nos pondremos en contacto contigo en menos de 24 horas con tu presupuesto personalizado.</span>
+                    </div>
+                </div>
+            }
+
+            <h2>Solicita tu presupuesto</h2>
+            <p class="pres-subtitulo">Sin compromiso. Respuesta garantizada en menos de 24 horas.</p>
+
+            <form asp-action="Presupuesto" method="post" class="form-pres">
+                @Html.AntiForgeryToken()
+
+                <div class="form-fila-pres">
+                    <div class="form-group-pres">
+                        <label asp-for="NombreContacto">Nombre del responsable <span class="req">*</span></label>
+                        <input asp-for="NombreContacto" type="text" placeholder="Nombre y apellidos" required />
+                        <span asp-validation-for="NombreContacto" class="campo-error"></span>
+                    </div>
+                    <div class="form-group-pres">
+                        <label asp-for="Telefono">Teléfono <span class="req">*</span></label>
+                        <input asp-for="Telefono" type="tel" placeholder="600 000 000" required />
+                        <span asp-validation-for="Telefono" class="campo-error"></span>
+                    </div>
+                </div>
+
+                <div class="form-fila-pres">
+                    <div class="form-group-pres">
+                        <label asp-for="Email">Email de contacto <span class="req">*</span></label>
+                        <input asp-for="Email" type="email" placeholder="tu@residencia.com" required />
+                        <span asp-validation-for="Email" class="campo-error"></span>
+                    </div>
+                    <div class="form-group-pres">
+                        <label asp-for="NumResidentes">Número de residentes</label>
+                        <input asp-for="NumResidentes" type="number" min="0" placeholder="Ej: 80" />
+                    </div>
+                </div>
+
+                <div class="form-group-pres">
+                    <label asp-for="Residencia">Nombre de la residencia <span class="req">*</span></label>
+                    <input asp-for="Residencia" type="text" placeholder="Residencia El Pinar" required />
+                    <span asp-validation-for="Residencia" class="campo-error"></span>
+                </div>
+
+                <div class="form-group-pres">
+                    <label asp-for="Detalle">Productos que necesita <span class="req">*</span></label>
+                    <textarea asp-for="Detalle" rows="5" placeholder="Describe qué productos necesitas, cantidades aproximadas, o cualquier otra información relevante..." required></textarea>
+                    <span asp-validation-for="Detalle" class="campo-error"></span>
+                </div>
+
+                <button type="submit" class="btn-pres-enviar">
+                    Solicitar presupuesto
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px">
+                        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </main>
+
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

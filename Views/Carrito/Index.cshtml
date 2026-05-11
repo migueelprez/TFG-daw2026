@@ -1,0 +1,109 @@
+@model IEnumerable<TFG.Models.CarritoItem>
+@{
+    ViewData["Title"] = "Mi Carrito — SENPRO";
+    var items = Model.ToList();
+    var total = items.Sum(i => i.Subtotal);
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Inicio", "/"),
+        ("Mi carrito", null)
+    };
+}
+<link rel="stylesheet" href="~/css/pago.css" asp-append-version="true" />
+
+<div class="carrito-wrapper">
+    <div class="carrito-header">
+        <h1>Mi carrito</h1>
+        <a asp-controller="Productos" asp-action="Productos" class="btn-volver">← Seguir comprando</a>
+    </div>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="carrito-toast">@TempData["Mensaje"]</div>
+    }
+
+    @if (!items.Any())
+    {
+        <div class="carrito-vacio">
+            <div class="carrito-vacio-icono">🛒</div>
+            <h2>Tu carrito está vacío</h2>
+            <p>Explora nuestro catálogo de productos para residencias geriátricas.</p>
+            <a asp-controller="Productos" asp-action="Productos" class="btn-pagar">Ver catálogo</a>
+        </div>
+    }
+    else
+    {
+        <div class="carrito-layout">
+            <div class="carrito-items">
+                @foreach (var item in items)
+                {
+                    <div class="carrito-item">
+                        <div class="item-imagen">
+                            <img src="~/assets/images/@item.ImagenUrl" alt="@item.Nombre" />
+                        </div>
+                        <div class="item-info">
+                            <h3>@item.Nombre</h3>
+                            <p class="item-precio">@item.Precio.ToString("N2") € / ud.</p>
+                        </div>
+                        <div class="item-controles">
+                            <form asp-controller="Carrito" asp-action="ActualizarCantidad" method="post" style="display:flex;align-items:center;gap:8px">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="productoId" value="@item.ProductoId" />
+                                <button type="submit" name="cantidad" value="@(item.Cantidad - 1)" class="btn-cantidad">−</button>
+                                <span class="cantidad-num">@item.Cantidad</span>
+                                <button type="submit" name="cantidad" value="@(item.Cantidad + 1)" class="btn-cantidad">+</button>
+                            </form>
+                        </div>
+                        <div class="item-subtotal">@item.Subtotal.ToString("N2") €</div>
+                        <form asp-controller="Carrito" asp-action="Eliminar" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="productoId" value="@item.ProductoId" />
+                            <button type="submit" class="btn-eliminar-item" title="Eliminar">✕</button>
+                        </form>
+                    </div>
+                }
+
+                <form asp-controller="Carrito" asp-action="Vaciar" method="post" style="text-align:right;margin-top:12px">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn-vaciar" onclick="return confirm('¿Vaciar el carrito?')">
+                        Vaciar carrito
+                    </button>
+                </form>
+            </div>
+
+            <aside class="carrito-resumen">
+                <h2>Resumen del pedido</h2>
+                <div class="resumen-lineas">
+                    @foreach (var item in items)
+                    {
+                        <div class="resumen-linea">
+                            <span>@item.Nombre × @item.Cantidad</span>
+                            <span>@item.Subtotal.ToString("N2") €</span>
+                        </div>
+                    }
+                </div>
+                <div class="resumen-total">
+                    <span>Total</span>
+                    <span>@total.ToString("N2") €</span>
+                </div>
+                <p class="resumen-nota">IVA incluido. Envío gratuito para pedidos de residencias.</p>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Carrito" asp-action="CrearSesionPago" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn-pagar">
+                            🔒 Pagar con Stripe
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Carrito/Index" class="btn-pagar">
+                        Inicia sesión para pagar
+                    </a>
+                }
+            </aside>
+        </div>
+    }
+</div>
