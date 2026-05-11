@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
 using TFG.Data;
@@ -48,6 +49,12 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();      // Crea la BD con el esquema actual
     DatabaseSeeder.Seed(context);
 }
+
+// Necesario para que Railway (proxy inverso) reenvíe correctamente scheme y host
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 if (app.Environment.IsDevelopment())
 {
